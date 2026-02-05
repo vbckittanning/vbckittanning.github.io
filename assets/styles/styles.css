@@ -12,6 +12,7 @@
     --bg-light: #f8f9fa;
     --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.15);
+    --add-to-cal-hover: #555555;
 }
 
 body {
@@ -1097,6 +1098,119 @@ body {
     padding: 0 5px;
     color: var(--text-dark);
     opacity: 0.5;
+}
+
+/* Calendar Icons Section */
+.event-calendar-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.calendar-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+    opacity: 0.8;
+}
+
+.calendar-icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.calendar-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+
+.calendar-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.calendar-icon svg {
+    transition: transform 0.2s ease;
+}
+
+.calendar-icon:hover svg {
+    transform: scale(1.1);
+}
+
+/* Brand-specific colors */
+.google-calendar {
+    background-color: #f5f5f5;
+}
+
+.google-calendar:hover {
+    background-color: var(--add-to-cal-hover);
+}
+
+.google-calendar svg {
+    fill: #4285f4;
+}
+
+.google-calendar:hover svg {
+    fill: white;
+}
+
+.outlook-calendar {
+    background-color: #f5f5f5;
+}
+
+.outlook-calendar:hover {
+    background-color: var(--add-to-cal-hover);
+}
+
+.outlook-calendar svg {
+    fill: #0078d4;
+}
+
+.outlook-calendar:hover svg {
+    fill: white;
+}
+
+.apple-calendar {
+    background-color: #f5f5f5;
+}
+
+.apple-calendar:hover {
+    background-color: var(--add-to-cal-hover);
+}
+
+.apple-calendar svg {
+    fill: var(--add-to-cal-hover);
+}
+
+.apple-calendar:hover svg {
+    fill: white;
+}
+
+/* Event Location Link */
+.event-location-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.event-location-link:visited {
+    color: inherit;
+}
+
+.event-location-link:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
 }
 
 @media (min-width: 768px) {

@@ -250,7 +250,9 @@ function calculateTotalPages(totalItems, itemsPerPage) {
  * @returns {string} Formatted date string
  */
 function formatDate(dateString, options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) {
-    const date = new Date(dateString);
+    const [year, month, day] = dateString.split('-').map(Number);
+    // Create date at noon to avoid timezone issues
+    const date = new Date(year, month - 1, day, 12, 0, 0);
     return date.toLocaleDateString('en-US', options);
 }
 
@@ -260,18 +262,19 @@ function formatDate(dateString, options = { weekday: 'long', year: 'numeric', mo
  * @returns {string} Three-letter month abbreviation
  */
 function getMonthAbbreviation(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+    const [year, month, day] = dateString.split('-').map(Number);
+    const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    return monthNames[month - 1];
 }
 
 /**
- * Get day of month from date string
+ * Get day of the month from a date string
  * @param {string} dateString - Date string in YYYY-MM-DD format
  * @returns {number} Day of the month
  */
 function getDayOfMonth(dateString) {
-    const date = new Date(dateString);
-    return date.getDate();
+    const [year, month, day] = dateString.split('-').map(Number);
+    return day;
 }
 
 // ============================================================================
