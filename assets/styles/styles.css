@@ -19,7 +19,6 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     min-width: 320px;
-    overflow-x: hidden;
 }
 
 .content {
@@ -458,6 +457,17 @@ body {
 .service-time .description {
     text-align: left;
     opacity: 0.85;
+}
+
+/* Hide description column on very small screens */
+@media (max-width: 335px) {
+    .service-time {
+        grid-template-columns: 100px 140px;
+    }
+    
+    .service-time .description {
+        display: none;
+    }
 }
 
 .footer-bottom {
@@ -1155,7 +1165,6 @@ body {
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 40px;
     max-width: 100%;
 }
 
@@ -1279,7 +1288,7 @@ body {
 
 .contact-map {
     background: white;
-    padding: 15px 10px;
+    padding: 0;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     max-width: 100%;
@@ -1288,7 +1297,8 @@ body {
 
 .map-link {
     text-align: center;
-    margin: 0;
+    max-width: 320px;
+    margin: 0 auto;
 }
 
 .map-link a {
@@ -1304,4 +1314,76 @@ body {
 
 .map-link a:hover {
     color: var(--primary-color);
+}
+
+/* Contact Map Responsive Sizing */
+.contact-map iframe {
+    width: 320px;
+    height: 220px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Hide map iframe below 375px but keep heading and link */
+@media (max-width: 374px) {
+    .contact-map iframe {
+        display: none;
+    }
+    
+    .map-link {
+        max-width: 100%;
+        text-align: left;
+    }
+}
+
+/* Medium screens - larger map */
+@media (min-width: 500px) {
+    .contact-map iframe {
+        width: 400px;
+        height: 300px;
+    }
+    
+    .map-link {
+        max-width: 400px;
+    }
+}
+
+/* Desktop - two column layout with map on right */
+@media (min-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+
+    .contact-section {
+        padding: 80px 0;
+    }
+
+    .contact-map iframe {
+        width: 100%;
+        height: 450px;
+    }
+    
+    .map-link {
+        max-width: 100%;
+    }
+}
+
+/* Tablet and up - hero styling */
+@media (min-width: 768px) {
+    .contact-hero {
+        padding: 100px 0 80px;
+    }
+
+    .contact-hero .hero-title {
+        font-size: 52px;
+    }
+
+    .contact-hero .hero-subtitle {
+        font-size: 20px;
+    }
+
+    .contact-cards {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
 }
