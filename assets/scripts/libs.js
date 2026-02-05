@@ -262,7 +262,7 @@ function formatDate(dateString, options = { weekday: 'long', year: 'numeric', mo
  * @returns {string} Three-letter month abbreviation
  */
 function getMonthAbbreviation(dateString) {
-    const [year, month, day] = dateString.split('-').map(Number);
+    const month = dateString.split('-').map(Number)[1];
     const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
     return monthNames[month - 1];
 }
@@ -273,8 +273,7 @@ function getMonthAbbreviation(dateString) {
  * @returns {number} Day of the month
  */
 function getDayOfMonth(dateString) {
-    const [year, month, day] = dateString.split('-').map(Number);
-    return day;
+    return dateString.split('-').map(Number)[2];
 }
 
 // ============================================================================

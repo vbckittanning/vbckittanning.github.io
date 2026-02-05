@@ -199,7 +199,7 @@ function createEventCard(event) {
                 <div class="event-calendar-section">
                     <span class="calendar-label">Add to Calendar:</span>
                     <div class="calendar-icons">
-                        <a href="#" onclick="addToGoogleCalendar(event, ${JSON.stringify(event).replace(/"/g, '&quot;')})" class="calendar-icon google-calendar" title="Add to Google Calendar">
+                        <a href="#" data-event='${JSON.stringify(event).replace(/'/g, "&#39;")}' class="calendar-icon google-calendar" title="Add to Google Calendar">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                                 <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.89 4 3.01 4.9 3.01 6L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5zm7 6H7v-2h5v2zm4 0h-2v-2h2v2zm0 4h-2v-2h2v2zm-4 0H7v-2h5v2z" fill="#4285F4"/>
                                 <path d="M12 14H7v-2h5v2z" fill="#EA4335"/>
@@ -208,7 +208,7 @@ function createEventCard(event) {
                                 <path d="M12 18H7v-2h5v2z" fill="#4285F4"/>
                             </svg>
                         </a>
-                        <a href="#" onclick="addToOutlookCalendar(event, ${JSON.stringify(event).replace(/"/g, '&quot;')})" class="calendar-icon outlook-calendar" title="Add to Outlook">
+                        <a href="#" data-event='${JSON.stringify(event).replace(/'/g, "&#39;")}' class="calendar-icon outlook-calendar" title="Add to Outlook">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                                 <path d="M24 12.5v7.1c0 .8-.7 1.4-1.5 1.4H13v-9h11v.5z" fill="#0078D4"/>
                                 <path d="M13 3v9H2V4.5C2 3.7 2.7 3 3.5 3H13z" fill="#0078D4"/>
@@ -217,7 +217,7 @@ function createEventCard(event) {
                                 <path d="M9.5 7C7.6 7 6 8.6 6 10.5S7.6 14 9.5 14s3.5-1.6 3.5-3.5S11.4 7 9.5 7zm0 5.5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="white"/>
                             </svg>
                         </a>
-                        <a href="#" onclick="downloadAppleCalendar(event, ${JSON.stringify(event).replace(/"/g, '&quot;')})" class="calendar-icon apple-calendar" title="Add to Apple Calendar">
+                        <a href="#" data-event='${JSON.stringify(event).replace(/'/g, "&#39;")}' class="calendar-icon apple-calendar" title="Add to Apple Calendar">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
                             </svg>
@@ -329,6 +329,9 @@ function renderEvents() {
     
     grid.innerHTML = currentPageEvents.map(event => createEventCard(event)).join('');
     renderPagination(totalPages);
+    
+    // Attach calendar icon event listeners
+    attachCalendarListeners();
     
     // Update results info
     const resultsInfo = document.getElementById('resultsInfo');
@@ -600,35 +603,34 @@ function downloadICSFile(event) {
 // ============================================================================
 
 /**
- * Add event to Google Calendar
- * @param {Event} e - Click event
- * @param {Object} eventData - Event data object
+ * Attach event listeners to calendar icons
  */
-function addToGoogleCalendar(e, eventData) {
-    e.preventDefault();
-    const url = generateGoogleCalendarUrl(eventData);
-    window.open(url, '_blank');
-}
-
-/**
- * Add event to Outlook Calendar
- * @param {Event} e - Click event
- * @param {Object} eventData - Event data object
- */
-function addToOutlookCalendar(e, eventData) {
-    e.preventDefault();
-    const url = generateOutlookCalendarUrl(eventData);
-    window.open(url, '_blank');
-}
-
-/**
- * Download ICS file for Apple Calendar
- * @param {Event} e - Click event
- * @param {Object} eventData - Event data object
- */
-function downloadAppleCalendar(e, eventData) {
-    e.preventDefault();
-    downloadICSFile(eventData);
+function attachCalendarListeners() {
+    document.querySelectorAll('.google-calendar').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const eventData = JSON.parse(link.getAttribute('data-event'));
+            const url = generateGoogleCalendarUrl(eventData);
+            window.open(url, '_blank');
+        });
+    });
+    
+    document.querySelectorAll('.outlook-calendar').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const eventData = JSON.parse(link.getAttribute('data-event'));
+            const url = generateOutlookCalendarUrl(eventData);
+            window.open(url, '_blank');
+        });
+    });
+    
+    document.querySelectorAll('.apple-calendar').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const eventData = JSON.parse(link.getAttribute('data-event'));
+            downloadICSFile(eventData);
+        });
+    });
 }
 
 // Run when DOM is loaded
