@@ -302,6 +302,7 @@ function getDayOfMonth(dateString) {
  * @property {Object} copyright
  * @property {number} copyright.year
  * @property {string} copyright.text
+ * @property {string} mapsUrl
  */
 
 /**

@@ -499,53 +499,24 @@ function generateGoogleCalendarUrl(event) {
  * @returns {string} Outlook Calendar URL
  */
 function generateOutlookCalendarUrl(event) {
-    // Parse the date and time components directly
-    const [year, month, day] = event.date.split('-').map(Number);
+    const { start, end } = parseEventDateTime(event.date, event.time);
     
-    // Parse time to get start and end
-    const parseTime = (timeStr) => {
-        const match = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-        if (!match) return null;
-        
-        let hours = parseInt(match[1]);
-        const minutes = parseInt(match[2]);
-        const meridiem = match[3].toUpperCase();
-        
-        if (meridiem === 'PM' && hours !== 12) hours += 12;
-        if (meridiem === 'AM' && hours === 12) hours = 0;
-        
-        return { hours, minutes };
+    const formatOutlookDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     };
-    
-    const rangeMatch = event.time.match(/(.+?)\s*-\s*(.+)/);
-    let startTime, endTime;
-    
-    if (rangeMatch) {
-        startTime = parseTime(rangeMatch[1]);
-        endTime = parseTime(rangeMatch[2]);
-    } else {
-        startTime = parseTime(event.time);
-        if (startTime) {
-            endTime = { hours: startTime.hours + 1, minutes: startTime.minutes };
-        }
-    }
-    
-    if (!startTime) {
-        startTime = { hours: 12, minutes: 0 };
-        endTime = { hours: 13, minutes: 0 };
-    }
-    
-    // Format as local datetime string (Outlook will interpret in user's timezone)
-    const pad = (n) => String(n).padStart(2, '0');
-    const startStr = `${year}-${pad(month)}-${pad(day)}T${pad(startTime.hours)}:${pad(startTime.minutes)}:00`;
-    const endStr = `${year}-${pad(month)}-${pad(day)}T${pad(endTime.hours)}:${pad(endTime.minutes)}:00`;
     
     const params = new URLSearchParams({
         path: '/calendar/action/compose',
         rru: 'addevent',
         subject: event.title,
-        startdt: startStr,
-        enddt: endStr,
+        startdt: formatOutlookDate(start),
+        enddt: formatOutlookDate(end),
         body: event.description || '',
         location: event.location || '',
         allday: 'false'
@@ -570,8 +541,8 @@ function generateICSFile(event) {
                   .replace(/,/g, '\\,')
                   .replace(/\n/g, '\\n');
     };
-    
-    const icsContent = [
+
+    return [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
         'PRODID:-//Victory Baptist Church//Events//EN',
@@ -604,8 +575,6 @@ function generateICSFile(event) {
         'END:VEVENT',
         'END:VCALENDAR'
     ].filter(line => line).join('\r\n');
-    
-    return icsContent;
 }
 
 /**
