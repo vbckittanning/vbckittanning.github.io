@@ -439,7 +439,7 @@ body {
 
 .service-time {
     display: grid;
-    grid-template-columns: 100px 140px 1fr;
+    grid-template-columns: 70px 140px 1fr;
     gap: 12px;
     font-size: 14px;
     opacity: 0.9;

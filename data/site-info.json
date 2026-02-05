@@ -8,7 +8,8 @@
     "city": "Kittanning",
     "state": "PA",
     "zip": "16201",
-    "fullAddress": "295 Pleasant View Drive, Kittanning, PA 16201"
+    "fullAddress": "295 Pleasant View Drive, Kittanning, PA 16201",
+    "mapsUrl": "https://www.google.com/maps/dir//Victory+Baptist+Church,+295+Pleasant+View+Dr,+Kittanning,+PA+16201"
   },
   "contact": {
     "email": "vbckittanning@gmail.com",
