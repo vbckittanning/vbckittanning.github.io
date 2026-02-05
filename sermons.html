@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sermons - Victory Baptist Church Kittanning</title>
+    <link rel="stylesheet" href="assets/styles/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <span>VBC</span>
+                    </div>
+                    <div class="logo-text">
+                        <h1>VICTORY BAPTIST</h1>
+                        <p>CHURCH</p>
+                    </div>
+                </div>
+                
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <nav class="nav" id="nav">
+                    <ul class="nav-list">
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="sermons.html">Sermons</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="content">
+        <div class="sermons-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h2 class="hero-title">Sermons</h2>
+                <div class="hero-divider"></div>
+                <p class="hero-subtitle">Watch our latest messages and grow in faith</p>
+            </div>
+        </div>
+
+        <section class="sermons-section">
+            <div class="container">
+                <div class="sermons-intro">
+                    <h2>Recent Messages</h2>
+                    <p>Watch our recent sermons and Bible teachings. New messages are added regularly.</p>
+                </div>
+
+                <div class="sermons-grid" id="sermonsGrid">
+                    <!-- Videos will be loaded automatically from YouTube API -->
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <p>Loading sermons...</p>
+                    </div>
+                </div>
+
+                <div class="channel-link">
+                    <a href="https://www.youtube.com/@victorybaptistchurchkittan6993/streams" target="_blank" class="channel-button">
+                        Visit Our YouTube Channel
+                    </a>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Footer content loaded dynamically from data/site-info.json -->
+            </div>
+            <div class="footer-bottom">
+                <p><!-- Copyright loaded dynamically --></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/scripts/libs.js"></script>
+    <script src="assets/scripts/script.js"></script>
+    <script src="assets/scripts/youtube-api.js"></script>
+    <script>
+        // Load footer content on page load
+        renderFooter();
+    </script>
+</body>
+</html>

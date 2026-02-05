@@ -30,9 +30,9 @@
                     <ul class="nav-list">
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
-                        <li><a href="#events">Events</a></li>
-                        <li><a href="#sermons">Sermons</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="sermons.html">Sermons</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -131,40 +131,23 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Victory Baptist Church</h3>
-                    <p>295 Pleasant View Drive</p>
-                    <p>Kittanning, PA 16201</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Service Times</h3>
-                    <div class="service-times">
-                        <div class="service-time">
-                            <span class="day">Sunday:</span>
-                            <span class="time">9:45-10:30 AM</span>
-                        </div>
-                        <div class="service-time">
-                            <span class="day"></span>
-                            <span class="time">10:45 AM-12:00 PM</span>
-                        </div>
-                        <div class="service-time">
-                            <span class="day">Wednesday:</span>
-                            <span class="time">7:00-8:00 PM</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p>Email: <a href="mailto:vbckittanning@gmail.com">vbckittanning@gmail.com</a></p>
-                    <p>Phone: <a href="tel:+17245481943">(724) 548-1943</a></p>
-                </div>
+                <!-- Footer content loaded dynamically from data/site-info.json -->
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Victory Baptist Church Kittanning. All rights reserved.</p>
+                <p><!-- Copyright loaded dynamically --></p>
             </div>
         </div>
     </footer>
 
+    <script src="assets/scripts/libs.js"></script>
     <script src="assets/scripts/script.js"></script>
+    <script>
+        // Load footer content on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => renderFooter());
+        } else {
+            renderFooter();
+        }
+    </script>
 </body>
 </html>

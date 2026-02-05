@@ -69,18 +69,22 @@ document.addEventListener('DOMContentLoaded', function() {
             autoPlayInterval = null;
         }
     }
-    
-    prevBtn.addEventListener('click', function() {
-        stopAutoPlay();
-        prevSlide();
-        startAutoPlay();
-    });
-    
-    nextBtn.addEventListener('click', function() {
-        stopAutoPlay();
-        nextSlide();
-        startAutoPlay();
-    });
+
+    if(prevBtn) {
+        prevBtn.addEventListener('click', function () {
+            stopAutoPlay();
+            prevSlide();
+            startAutoPlay();
+        });
+    }
+
+    if(nextBtn) {
+        nextBtn.addEventListener('click', function () {
+            stopAutoPlay();
+            nextSlide();
+            startAutoPlay();
+        });
+    }
     
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', function() {
@@ -91,34 +95,36 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     const carousel = document.querySelector('.carousel');
-    carousel.addEventListener('mouseenter', stopAutoPlay);
-    carousel.addEventListener('mouseleave', startAutoPlay);
-    
-    carousel.addEventListener('touchstart', stopAutoPlay);
-    carousel.addEventListener('touchend', function() {
-        setTimeout(startAutoPlay, 3000);
-    });
-    
-    startAutoPlay();
-    
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    carousel.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    carousel.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-    
-    function handleSwipe() {
-        if (touchEndX < touchStartX - 50) {
-            nextSlide();
-        }
-        if (touchEndX > touchStartX + 50) {
-            prevSlide();
+    if(carousel) {
+        carousel.addEventListener('mouseenter', stopAutoPlay);
+        carousel.addEventListener('mouseleave', startAutoPlay);
+
+        carousel.addEventListener('touchstart', stopAutoPlay);
+        carousel.addEventListener('touchend', function () {
+            setTimeout(startAutoPlay, 3000);
+        });
+
+        startAutoPlay();
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carousel.addEventListener('touchstart', function (e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        carousel.addEventListener('touchend', function (e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide();
+            }
         }
     }
 });

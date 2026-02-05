@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Victory Baptist Church Kittanning</title>
+    <link rel="stylesheet" href="assets/styles/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <span>VBC</span>
+                    </div>
+                    <div class="logo-text">
+                        <h1>VICTORY BAPTIST</h1>
+                        <p>CHURCH</p>
+                    </div>
+                </div>
+                
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <nav class="nav" id="nav">
+                    <ul class="nav-list">
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="sermons.html">Sermons</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="content">
+        <div class="events-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h2 class="hero-title">Upcoming Events</h2>
+                <div class="hero-divider"></div>
+                <p class="hero-subtitle">Join us for upcoming services, studies, and fellowship</p>
+            </div>
+        </div>
+
+        <section class="events-section">
+            <div class="container">
+                <div class="events-controls">
+                    <div class="results-info" id="resultsInfo"></div>
+                    <div class="view-toggle" id="viewToggle"></div>
+                </div>
+
+                <div class="events-grid" id="eventsGrid">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <p>Loading events...</p>
+                    </div>
+                </div>
+
+                <div id="pagination"></div>
+            </div>
+        </section>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Footer content loaded dynamically from data/site-info.json -->
+            </div>
+            <div class="footer-bottom">
+                <p><!-- Copyright loaded dynamically --></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/scripts/script.js"></script>
+    <script src="assets/scripts/libs.js"></script>
+    <script src="assets/scripts/events.js"></script>
+    <script>
+        // Load footer content on page load
+        renderFooter();
+    </script>
+</body>
+</html>

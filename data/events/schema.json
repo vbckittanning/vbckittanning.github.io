@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Event",
+  "description": "Schema for church event data",
+  "type": "object",
+  "required": ["id", "title", "date", "time", "description"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the event (use format: event-YYYY-MM-DD-slug)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Event title"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Event date in YYYY-MM-DD format"
+    },
+    "time": {
+      "type": "string",
+      "description": "Event time (e.g., '7:00 PM' or '10:00 AM - 12:00 PM')"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the event"
+    },
+    "location": {
+      "type": "string",
+      "description": "Event location (optional, defaults to church address)"
+    },
+    "image": {
+      "type": "string",
+      "description": "Path to event image (optional)"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["service", "study", "fellowship", "outreach", "youth", "special"],
+      "description": "Event category"
+    },
+    "contactName": {
+      "type": "string",
+      "description": "Contact person for the event (optional)"
+    },
+    "contactEmail": {
+      "type": "string",
+      "format": "email",
+      "description": "Contact email (optional)"
+    },
+    "contactPhone": {
+      "type": "string",
+      "description": "Contact phone (optional)"
+    },
+    "registrationRequired": {
+      "type": "boolean",
+      "description": "Whether registration is required (optional, defaults to false)"
+    },
+    "registrationLink": {
+      "type": "string",
+      "format": "uri",
+      "description": "Link to registration form (optional)"
+    }
+  }
+}
