@@ -593,11 +593,12 @@ body {
 .sermons-hero {
     margin-top: 80px;
     height: 300px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--text-light);
 }
 
 .hero-subtitle {
@@ -817,11 +818,12 @@ body {
 .events-hero {
     margin-top: 80px;
     height: 300px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--text-light);
 }
 
 .events-section {
@@ -1251,9 +1253,14 @@ body {
    ============================================================================ */
 
 .contact-hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    margin-top: 80px;
+    height: 300px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--text-light);
-    padding: 80px 0 60px;
     text-align: center;
 }
 
@@ -1445,7 +1452,7 @@ body {
 /* Tablet and up - hero styling */
 @media (min-width: 768px) {
     .contact-hero {
-        padding: 100px 0 80px;
+        height: 350px;
     }
 
     .contact-hero .hero-title {
@@ -1458,5 +1465,279 @@ body {
 
     .contact-cards {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .contact-hero {
+        height: 400px;
+    }
+}
+
+/* ============================================================================
+   ABOUT PAGE STYLES
+   ============================================================================ */
+
+.about-hero {
+    margin-top: 80px;
+    height: 300px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+}
+
+.about-section {
+    padding: 60px 0;
+    background-color: var(--bg-light);
+}
+
+.about-church {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+}
+
+.about-church h2 {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.about-church p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+
+.about-church p:last-child {
+    margin-bottom: 0;
+}
+
+.pastor-section {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+}
+
+.pastor-section h2 {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.pastor-bio {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.pastor-image-container {
+    flex-shrink: 0;
+    width: 250px;
+    height: 250px;
+    border-radius: 16px;
+    overflow: visible;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.pastor-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 90px;
+    z-index: 2;
+}
+
+.pastor-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--secondary-color);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    border-top-left-radius: 16px;
+    opacity: 0.95;
+}
+
+.pastor-badge::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    z-index: -1;
+    filter: blur(8px);
+}
+
+.pastor-badge-bottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 90px;
+    height: 90px;
+    z-index: 2;
+}
+
+.pastor-badge-bottom::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--secondary-color);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    border-bottom-right-radius: 16px;
+    opacity: 0.95;
+}
+
+.pastor-badge-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    z-index: -1;
+    filter: blur(8px);
+}
+
+.pastor-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 16px;
+}
+
+.pastor-details h3 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.pastor-title {
+    font-size: 18px;
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.pastor-details p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.pastor-details p:last-child {
+    margin-bottom: 0;
+}
+
+.about-beliefs {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.about-beliefs h2 {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.beliefs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+
+.belief-card {
+    padding: 25px;
+    background: var(--bg-light);
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.belief-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.belief-card h3 {
+    font-size: 20px;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.belief-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .about-hero {
+        height: 350px;
+    }
+
+    .pastor-bio {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .pastor-image-container {
+        width: 300px;
+        height: 300px;
+    }
+
+    .beliefs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .about-hero {
+        height: 400px;
+    }
+
+    .about-section {
+        padding: 80px 0;
+    }
+
+    .about-church,
+    .pastor-section,
+    .about-beliefs {
+        padding: 50px 40px;
     }
 }

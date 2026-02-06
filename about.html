@@ -2,9 +2,122 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Victory Baptist Church Kittanning</title>
+    <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 <body>
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <span>VBC</span>
+                    </div>
+                    <div class="logo-text">
+                        <h1>VICTORY BAPTIST</h1>
+                        <p>CHURCH</p>
+                    </div>
+                </div>
+                
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <nav class="nav" id="nav">
+                    <ul class="nav-list">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="sermons.html">Sermons</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
 
+    <section class="content">
+        <div class="about-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h2 class="hero-title">About Us</h2>
+                <div class="hero-divider"></div>
+                <p class="hero-subtitle">Discover our mission, values, and the people who make Victory Baptist Church a family</p>
+            </div>
+        </div>
+
+        <section class="about-section">
+            <div class="container">
+                <div class="about-church">
+                    <h2>Welcome to Victory Baptist Church</h2>
+                    <p>Victory Baptist Church has been a beacon of faith and community in Kittanning for many years. We are a Bible-believing church committed to preaching the Gospel of Jesus Christ, nurturing believers in their faith, and reaching out to our community with the love of Christ.</p>
+                    <p>Our mission is to glorify God by making disciples who love Him with all their hearts, serve Him faithfully, and share His truth with others. We believe in the authority of Scripture, the power of prayer, and the importance of fellowship among believers.</p>
+                    <p>At Victory Baptist Church, you'll find a warm and welcoming congregation that values authentic worship, biblical teaching, and genuine relationships. Whether you're seeking answers to life's big questions, looking for a church family, or wanting to grow deeper in your faith, we invite you to join us.</p>
+                </div>
+
+                <div class="pastor-section">
+                    <h2>Meet Our Pastor</h2>
+                    <div class="pastor-bio">
+                        <div class="pastor-image-container">
+                            <div class="pastor-badge"></div>
+                            <div class="pastor-badge-bottom"></div>
+                            <img src="assets/images/leo-lenze.png" alt="Pastor Leo Lenze" class="pastor-image">
+                        </div>
+                        <div class="pastor-details">
+                            <h3>Pastor Leo Lenze</h3>
+                            <p class="pastor-title">Senior Pastor</p>
+                            <p>Pastor Leo Lenze has been faithfully serving as the Senior Pastor of Victory Baptist Church since [YEAR]. With a heart for God's Word and a passion for shepherding His people, Pastor Lenze leads our congregation with wisdom, compassion, and dedication.</p>
+                            <p>Before coming to Victory Baptist Church, Pastor Lenze [BACKGROUND INFORMATION - education, previous ministry experience, etc.]. He holds a [DEGREE] from [INSTITUTION] and has been in ministry for [NUMBER] years.</p>
+                            <p>Pastor Lenze is known for his expository preaching style, bringing the truths of Scripture to life in practical and meaningful ways. He has a deep commitment to discipleship and believes in equipping believers to live out their faith in everyday life.</p>
+                            <p>Pastor Lenze and his wife [SPOUSE NAME] have been married for [NUMBER] years and have [NUMBER] children. In his free time, he enjoys [HOBBIES/INTERESTS]. The Lenze family considers it a privilege to serve the Lord alongside the wonderful people of Victory Baptist Church.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-beliefs">
+                    <h2>What We Believe</h2>
+                    <div class="beliefs-grid">
+                        <div class="belief-card">
+                            <h3>The Bible</h3>
+                            <p>We believe the Bible is the inspired, inerrant Word of God and our final authority for faith and practice.</p>
+                        </div>
+                        <div class="belief-card">
+                            <h3>Salvation</h3>
+                            <p>We believe salvation is by grace alone through faith alone in Jesus Christ alone, and not by works.</p>
+                        </div>
+                        <div class="belief-card">
+                            <h3>The Trinity</h3>
+                            <p>We believe in one God eternally existing in three persons: Father, Son, and Holy Spirit.</p>
+                        </div>
+                        <div class="belief-card">
+                            <h3>The Church</h3>
+                            <p>We believe the church is the body of Christ, called to worship, fellowship, discipleship, and evangelism.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Footer content loaded dynamically from data/site-info.json -->
+            </div>
+            <div class="footer-bottom">
+                <p><!-- Copyright loaded dynamically --></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/scripts/libs.js"></script>
+    <script src="assets/scripts/script.js"></script>
+    <script>
+        // Load footer content on page load
+        renderFooter();
+    </script>
 </body>
 </html>
