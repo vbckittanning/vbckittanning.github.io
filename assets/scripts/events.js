@@ -342,30 +342,7 @@ function renderEvents() {
     }
 }
 
-// Show loading state
-function showLoading() {
-    const grid = document.getElementById('eventsGrid');
-    if (grid) {
-        grid.innerHTML = `
-            <div class="loading-container">
-                <div class="loading-spinner"></div>
-                <p>Loading events...</p>
-            </div>
-        `;
-    }
-}
-
-// Show error message
-function showError(message) {
-    const grid = document.getElementById('eventsGrid');
-    if (grid) {
-        grid.innerHTML = `
-            <div class="error-container">
-                <p class="error-message">${message}</p>
-            </div>
-        `;
-    }
-}
+// Note: showLoading and showError are now in libs.js as shared utilities
 
 // Initialize the events page
 async function initializeEventsPage() {
@@ -375,7 +352,7 @@ async function initializeEventsPage() {
     }
     
     initializeViewMode();
-    showLoading();
+    showLoading('eventsGrid', 'Loading events...');
     
     try {
         // loadPageEvents only loads the 10 events for the current page
@@ -383,7 +360,7 @@ async function initializeEventsPage() {
         renderEvents();
     } catch (error) {
         console.error('Failed to initialize events page:', error);
-        showError('An unexpected error occurred while loading events.');
+        showError('eventsGrid', 'An unexpected error occurred while loading events.');
     }
 }
 
@@ -465,15 +442,13 @@ function parseEventDateTime(date, time) {
 }
 
 /**
- * Format date for ICS format (YYYYMMDDTHHMMSS) with timezone
+ * Format date for ICS format (YYYYMMDDTHHMMSS)
  * @param {Date} date - JavaScript Date object
- * @param {boolean} withTimezone - Whether to append timezone info
  * @returns {string} Formatted date string
  */
-function formatICSDate(date, withTimezone = false) {
+function formatICSDate(date) {
     const pad = (n) => n.toString().padStart(2, '0');
-    const formatted = `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
-    return withTimezone ? formatted : formatted;
+    return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
 }
 
 /**

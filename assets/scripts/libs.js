@@ -311,6 +311,49 @@ function getDayOfMonth(dateString) {
  * @property {string} description
  */
 
+// ============================================================================
+// SHARED UI UTILITIES
+// ============================================================================
+
+/**
+ * Show loading state in a container
+ * @param {string} containerId - ID of the container element
+ * @param {string} message - Loading message to display
+ */
+function showLoading(containerId, message = 'Loading...') {
+    const container = document.getElementById(containerId);
+    if (container) {
+        container.innerHTML = `
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>${message}</p>
+            </div>
+        `;
+    }
+}
+
+/**
+ * Show error message in a container
+ * @param {string} containerId - ID of the container element
+ * @param {string} message - Error message to display
+ * @param {string} helpText - Optional help text
+ */
+function showError(containerId, message, helpText = '') {
+    const container = document.getElementById(containerId);
+    if (container) {
+        container.innerHTML = `
+            <div class="error-container">
+                <p class="error-message">${message}</p>
+                ${helpText ? `<p class="error-help">${helpText}</p>` : ''}
+            </div>
+        `;
+    }
+}
+
+// ============================================================================
+// FOOTER RENDERING
+// ============================================================================
+
 /**
  * Load and render footer content from site-info.json
  * @param {string} siteInfoPath - Path to site-info.json file (default: 'data/site-info.json')

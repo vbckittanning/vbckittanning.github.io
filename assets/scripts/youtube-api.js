@@ -95,32 +95,6 @@ function createSermonCard(video) {
     `;
 }
 
-// Show loading state
-function showLoading() {
-    const grid = document.getElementById('sermonsGrid');
-    if (grid) {
-        grid.innerHTML = `
-            <div class="loading-container">
-                <div class="loading-spinner"></div>
-                <p>Loading sermons...</p>
-            </div>
-        `;
-    }
-}
-
-// Show error message
-function showError(message) {
-    const grid = document.getElementById('sermonsGrid');
-    if (grid) {
-        grid.innerHTML = `
-            <div class="error-container">
-                <p class="error-message">${message}</p>
-                <p class="error-help">Check the browser console for more details.</p>
-            </div>
-        `;
-    }
-}
-
 // Render videos to the page
 function renderVideos(videos) {
     const grid = document.getElementById('sermonsGrid');
@@ -151,14 +125,14 @@ async function initializeSermonsPage() {
         return; // Not on sermons page
     }
     
-    showLoading();
+    showLoading('sermonsGrid', 'Loading sermons...');
     
     try {
         const videos = await fetchYouTubeVideos();
         renderVideos(videos);
     } catch (error) {
         console.error('Failed to initialize sermons page:', error);
-        showError('An unexpected error occurred while loading sermons.');
+        showError('sermonsGrid', 'An unexpected error occurred while loading sermons.', 'Check the browser console for more details.');
     }
 }
 

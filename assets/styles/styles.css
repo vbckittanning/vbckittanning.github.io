@@ -933,7 +933,7 @@ body {
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .category-service {
@@ -1356,48 +1356,6 @@ body {
 .contact-details a:hover {
     color: var(--primary-color);
     text-decoration: underline;
-}
-
-.service-times-section {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.service-times-section h3 {
-    font-size: 20px;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.service-times-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.service-time-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #e9ecef;
-}
-
-.service-time-item:last-child {
-    border-bottom: none;
-}
-
-.service-time-item .service-day {
-    font-weight: 600;
-    color: var(--primary-color);
-    min-width: 120px;
-}
-
-.service-time-item .service-time {
-    color: var(--text-dark);
-    text-align: right;
 }
 
 .contact-map {
