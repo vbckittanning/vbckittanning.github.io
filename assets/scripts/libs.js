@@ -391,8 +391,10 @@ async function renderFooter(siteInfoPath = 'data/site-info.json') {
         footerContent.innerHTML = `
             <div class="footer-section">
                 <h3>${siteInfo.church.name}</h3>
-                <p>${siteInfo.address.street}</p>
-                <p>${siteInfo.address.city}, ${siteInfo.address.state} ${siteInfo.address.zip}</p>
+                <a href="" target="_blank" rel="noopener noreferrer">
+                    <p>${siteInfo.address.street}</p>
+                    <p>${siteInfo.address.city}, ${siteInfo.address.state} ${siteInfo.address.zip}</p>                
+                </a>
             </div>
             <div class="footer-section">
                 <h3>Service Times</h3>

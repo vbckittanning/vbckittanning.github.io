@@ -401,7 +401,7 @@ body {
     }
 
     a:visited {
-        color: var(--secondary-color);
+        color: var(--text-light);
     }
 
     a:active {
