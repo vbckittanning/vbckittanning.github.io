@@ -1033,6 +1033,19 @@ button:focus {
     letter-spacing: 1px;
 }
 
+/* Mobile: Stack category below title for better title wrapping */
+@media (max-width: 767px) {
+    .event-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .event-title {
+        width: 100%;
+    }
+}
+
 .category-service {
     background-color: #e3f2fd;
     color: #1976d2;
