@@ -167,7 +167,7 @@ function renderPhotoPage() {
         const actualIndex = startIndex + pageIndex;
         const photoItem = document.createElement('div');
         photoItem.className = 'photo-item';
-        photoItem.setAttribute('data-index', actualIndex);
+        photoItem.setAttribute('data-index', actualIndex.toString());
         
         const img = document.createElement('img');
         img.src = photo.src || photo;
@@ -222,7 +222,7 @@ function renderPhotoPagination() {
     // Page info
     const pageInfo = document.createElement('span');
     pageInfo.className = 'photo-page-info';
-    pageInfo.textContent = `Page ${currentPhotoPage} of ${totalPages}`;
+    pageInfo.textContent = `${currentPhotoPage} of ${totalPages}`;
     paginationDiv.appendChild(pageInfo);
     
     // Next button

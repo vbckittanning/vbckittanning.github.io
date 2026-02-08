@@ -17,38 +17,6 @@ function getQueryParam(param) {
     return urlParams.get(param);
 }
 
-/**
- * Set a query parameter and reload the page
- * @param {string} param - The parameter name to set
- * @param {string|null} value - The parameter value (null to delete)
- */
-function setQueryParam(param, value) {
-    const url = new URL(window.location);
-    if (value) {
-        url.searchParams.set(param, value);
-    } else {
-        url.searchParams.delete(param);
-    }
-    window.location.href = url.toString();
-}
-
-/**
- * Build a URL with query parameters
- * @param {Object} params - Object with key-value pairs for query parameters
- * @returns {string} The constructed URL
- */
-function buildUrlWithParams(params) {
-    const url = new URL(window.location);
-    Object.keys(params).forEach(key => {
-        if (params[key] !== null && params[key] !== undefined) {
-            url.searchParams.set(key, params[key]);
-        } else {
-            url.searchParams.delete(key);
-        }
-    });
-    return url.toString();
-}
-
 // ============================================================================
 // JSON LOADING UTILITIES
 // ============================================================================
@@ -197,37 +165,9 @@ function isDatePast(dateString) {
     return compareDate < today;
 }
 
-/**
- * Check if a date string represents a future date
- * @param {string} dateString - Date string in YYYY-MM-DD format
- * @returns {boolean} True if the date is in the future
- */
-function isDateFuture(dateString) {
-    if (!dateString) return false;
-    
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const compareDate = new Date(dateString);
-    compareDate.setHours(0, 0, 0, 0);
-    return compareDate > today;
-}
-
 // ============================================================================
 // ARRAY UTILITIES
 // ============================================================================
-
-/**
- * Get a paginated slice of an array
- * @param {Array} array - The array to paginate
- * @param {number} page - Page number (1-indexed)
- * @param {number} itemsPerPage - Number of items per page
- * @returns {Array} The paginated slice
- */
-function paginateArray(array, page, itemsPerPage) {
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return array.slice(startIndex, endIndex);
-}
 
 /**
  * Calculate total pages for pagination

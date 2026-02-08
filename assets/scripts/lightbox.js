@@ -141,11 +141,11 @@ class Lightbox {
             touchEndX = e.changedTouches[0].screenX;
             this.handleSwipe();
         }, { passive: true });
-        
-        const handleSwipe = () => {
+
+        this.handleSwipe = () => {
             const swipeThreshold = 50;
             const diff = touchStartX - touchEndX;
-            
+
             if (Math.abs(diff) > swipeThreshold) {
                 if (diff > 0) {
                     // Swipe left - next image
@@ -156,8 +156,6 @@ class Lightbox {
                 }
             }
         };
-        
-        this.handleSwipe = handleSwipe;
     }
 }
 

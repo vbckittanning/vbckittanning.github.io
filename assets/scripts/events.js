@@ -10,6 +10,7 @@
  * @property {string} [contactName] - Contact person name (optional)
  * @property {string} [contactEmail] - Contact email (optional)
  * @property {string} [contactPhone] - Contact phone (optional)
+ * @property {boolean} [eventPage] - Whether this event has its own page (optional)
  */
 
 // Events Page Configuration
