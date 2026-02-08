@@ -1023,6 +1023,23 @@ button:focus {
     flex: 1;
 }
 
+.event-title-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.event-title-link:hover,
+.event-title-link:focus {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.event-title-link:hover .event-title,
+.event-title-link:focus .event-title {
+    color: var(--secondary-color);
+}
+
 .event-category {
     display: inline-block;
     padding: 5px 12px;

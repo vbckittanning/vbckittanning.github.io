@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Family Game Night at Victory Baptist Church Kittanning - January 22, 2026. View photos and details from this fellowship event.">
+    <meta name="copyright" content="Victory Baptist Church Kittanning">
+    <meta property="og:title" content="Family Game Night - Victory Baptist Church Kittanning">
+    <meta property="og:description" content="Families gathered for an evening of board games, card games, and Christian fellowship.">
+    <meta property="og:url" content="https://vbckittanning.com/events/event-2026-01-22-game-night.html">
+    <meta property="og:site_name" content="Victory Baptist Church Kittanning">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://vbckittanning.com/events/event-2026-01-22-game-night.html">
+    <title>Family Game Night - Victory Baptist Church Kittanning</title>
+    <link rel="stylesheet" href="../assets/styles/styles.css">
+    <link rel="stylesheet" href="../assets/styles/lightbox.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="../index.html" class="logo-link">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <span>VBC</span>
+                        </div>
+                        <div class="logo-text">
+                            <h1>VICTORY BAPTIST</h1>
+                            <p>CHURCH</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <nav class="nav" id="nav" aria-label="Main navigation">
+                    <ul class="nav-list">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../about.html">About</a></li>
+                        <li><a href="../events.html" aria-current="page">Events</a></li>
+                        <li><a href="../sermons.html">Sermons</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="content" role="main">
+        <div class="event-detail-hero" aria-label="Event header">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="breadcrumb">
+                    <a href="../events.html">Events</a> / <span id="breadcrumb-title">Loading...</span>
+                </div>
+                <h1 class="hero-title" id="event-title">Loading Event...</h1>
+                <div class="event-detail-meta" id="event-meta">
+                    <!-- Loaded from JSON -->
+                </div>
+            </div>
+        </div>
+
+        <section class="event-detail-section" aria-label="Event details">
+            <div class="container">
+                <div class="event-detail-content">
+                    <div class="event-detail-description">
+                        <h2>About This Event</h2>
+                        <p id="event-description">Loading event details...</p>
+                    </div>
+
+                    <div class="event-detail-info-card">
+                        <h3>Event Information</h3>
+                        <div id="event-info">
+                            <!-- Loaded from JSON -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-photos-section">
+                    <h2>Event Photos</h2>
+                    <div class="photo-grid" id="photoGrid">
+                        <!-- Photos loaded from JSON -->
+                    </div>
+                </div>
+
+                <div class="event-detail-actions">
+                    <a href="../events.html" class="btn-secondary">← Back to Events</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-label="Photo viewer" aria-modal="true">
+        <button class="lightbox-close" aria-label="Close photo viewer">&times;</button>
+        <button class="lightbox-prev" aria-label="Previous photo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button class="lightbox-next" aria-label="Next photo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+            <div class="lightbox-counter" id="lightbox-counter"></div>
+        </div>
+    </div>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Footer content loaded dynamically from data/site-info.json -->
+            </div>
+            <div class="footer-bottom">
+                <p><!-- Copyright loaded dynamically --></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/scripts/libs.js"></script>
+    <script src="../assets/scripts/script.js"></script>
+    <script src="../assets/scripts/lightbox.js"></script>
+    <script src="../assets/scripts/event-detail.js"></script>
+    <script>
+        // Load footer and event data on page load
+        // Pass correct path to site-info.json since we're in /events/ folder
+        renderFooter('../data/site-info.json');
+        loadEventDetail();
+    </script>
+</body>
+</html>

@@ -10,8 +10,6 @@
  * @property {string} [contactName] - Contact person name (optional)
  * @property {string} [contactEmail] - Contact email (optional)
  * @property {string} [contactPhone] - Contact phone (optional)
- * @property {boolean} [registrationRequired] - Whether registration is required (optional)
- * @property {string} [registrationLink] - Registration link (optional)
  */
 
 // Events Page Configuration
@@ -146,6 +144,12 @@ function createEventCard(event) {
     const categoryClass = getCategoryClass(event.category);
     const categoryName = getCategoryName(event.category);
     
+    // Create event page link if eventPage is true
+    const eventPageUrl = event.eventPage ? `events/${event.id}.html` : null;
+    const titleHtml = eventPageUrl 
+        ? `<a href="${eventPageUrl}" class="event-title-link"><h3 class="event-title">${event.title}</h3></a>`
+        : `<h3 class="event-title">${event.title}</h3>`;
+    
     return `
         <div class="event-card">
             <div class="event-date-badge">
@@ -154,7 +158,7 @@ function createEventCard(event) {
             </div>
             <div class="event-content">
                 <div class="event-header">
-                    <h3 class="event-title">${event.title}</h3>
+                    ${titleHtml}
                     ${event.category ? `<span class="event-category ${categoryClass}">${categoryName}</span>` : ''}
                 </div>
                 <div class="event-meta">
@@ -192,9 +196,6 @@ function createEventCard(event) {
                     ${event.contactEmail ? `<a href="mailto:${event.contactEmail}">${event.contactEmail}</a>` : ''}
                     ${event.contactPhone ? `<a href="tel:${event.contactPhone.replace(/\D/g, '')}">${event.contactPhone}</a>` : ''}
                 </div>
-                ` : ''}
-                ${event.registrationRequired && event.registrationLink ? `
-                <a href="${event.registrationLink}" class="event-register-btn" target="_blank">Register Now</a>
                 ` : ''}
                 <div class="event-calendar-section">
                     <span class="calendar-label">Add to Calendar:</span>

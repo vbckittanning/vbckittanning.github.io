@@ -51,15 +51,6 @@
     "contactPhone": {
       "type": "string",
       "description": "Contact phone (optional)"
-    },
-    "registrationRequired": {
-      "type": "boolean",
-      "description": "Whether registration is required (optional, defaults to false)"
-    },
-    "registrationLink": {
-      "type": "string",
-      "format": "uri",
-      "description": "Link to registration form (optional)"
     }
   }
 }
