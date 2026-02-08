@@ -3,35 +3,59 @@
  */
 
 async function loadEventDetail() {
-    try {
         // Extract event ID from the filename
-        const pathname = window.location.pathname;
-        const filename = pathname.split('/').pop();
-        const eventId = filename.replace('.html', '');
-        
-        const dataPath = '../data/events/';
-        
-        // Load event data from JSON file
-        const response = await fetch(`${dataPath}${eventId}.json`);
-        
-        if (!response.ok) {
-            throw new Error('Event not found');
-        }
-        
-        const event = await response.json();
-        
-        // Populate page with event data
-        populateEventDetails(event);
-        
-    } catch (error) {
-        console.error('Error loading event:', error);
+    const pathname = window.location.pathname;
+    const filename = pathname.split('/').pop();
+    const eventId = filename.replace('.html', '');
+
+    const dataPath = '../data/events/';
+
+    // Load event data from JSON file
+    const response = await fetch(`${dataPath}${eventId}.json`);
+
+    if (!response.ok) {
         showEventError();
     }
+
+    const event = await response.json();
+
+    // Populate page with event data
+    populateEventDetails(event);
 }
 
 function populateEventDetails(event) {
-    // Update page title
-    document.title = `${event.title} - Victory Baptist Church Kittanning`;
+    // Update page title and meta tags
+    const pageTitle = `${event.title} - Victory Baptist Church Kittanning`;
+    document.title = pageTitle;
+    
+    // Get current page URL
+    const currentUrl = window.location.href;
+    
+    // Update meta tags
+    const metaDescription = document.getElementById('meta-description');
+    if (metaDescription) {
+        metaDescription.setAttribute('content', event.description);
+    }
+    
+    const metaOgTitle = document.getElementById('meta-og-title');
+    if (metaOgTitle) {
+        metaOgTitle.setAttribute('content', pageTitle);
+    }
+    
+    const metaOgDescription = document.getElementById('meta-og-description');
+    if (metaOgDescription) {
+        metaOgDescription.setAttribute('content', event.description);
+    }
+    
+    const metaOgUrl = document.getElementById('meta-og-url');
+    if (metaOgUrl) {
+        metaOgUrl.setAttribute('content', currentUrl);
+    }
+    
+    const metaCanonical = document.getElementById('meta-canonical');
+    if (metaCanonical) {
+        metaCanonical.setAttribute('href', currentUrl);
+    }
     
     // Update breadcrumb
     const breadcrumbTitle = document.getElementById('breadcrumb-title');
@@ -111,22 +135,43 @@ function populateEventDetails(event) {
             photosSection.style.display = 'none';
         }
     }
+    
+    // Render calendar options
+    renderCalendarOptions(event);
 }
 
+// Photo pagination state
+let allPhotos = [];
+let currentPhotoPage = 1;
+const photosPerPage = 6;
+
 function loadEventPhotos(photos) {
+    allPhotos = photos;
+    currentPhotoPage = 1;
+    
+    renderPhotoPage();
+    renderPhotoPagination();
+}
+
+function renderPhotoPage() {
     const photoGrid = document.getElementById('photoGrid');
     if (!photoGrid) return;
     
     photoGrid.innerHTML = '';
     
-    photos.forEach((photo, index) => {
+    const startIndex = (currentPhotoPage - 1) * photosPerPage;
+    const endIndex = Math.min(startIndex + photosPerPage, allPhotos.length);
+    const pagePhotos = allPhotos.slice(startIndex, endIndex);
+    
+    pagePhotos.forEach((photo, pageIndex) => {
+        const actualIndex = startIndex + pageIndex;
         const photoItem = document.createElement('div');
         photoItem.className = 'photo-item';
-        photoItem.setAttribute('data-index', index);
+        photoItem.setAttribute('data-index', actualIndex);
         
         const img = document.createElement('img');
         img.src = photo.src || photo;
-        img.alt = photo.alt || `Event photo ${index + 1}`;
+        img.alt = photo.alt || `Event photo ${actualIndex + 1}`;
         img.loading = 'lazy';
         
         photoItem.appendChild(img);
@@ -139,6 +184,106 @@ function loadEventPhotos(photos) {
             window.lightboxInstance = new window.Lightbox();
         }, 100);
     }
+}
+
+function renderPhotoPagination() {
+    const totalPages = Math.ceil(allPhotos.length / photosPerPage);
+    
+    // Only show pagination if more than one page
+    if (totalPages <= 1) return;
+    
+    const photosSection = document.querySelector('.event-photos-section');
+    if (!photosSection) return;
+    
+    // Remove existing pagination if present
+    const existingPagination = photosSection.querySelector('.photo-pagination');
+    if (existingPagination) {
+        existingPagination.remove();
+    }
+    
+    const paginationDiv = document.createElement('div');
+    paginationDiv.className = 'photo-pagination';
+    
+    // Previous button
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'photo-page-btn';
+    prevBtn.innerHTML = '← Previous';
+    prevBtn.disabled = currentPhotoPage === 1;
+    prevBtn.addEventListener('click', () => {
+        if (currentPhotoPage > 1) {
+            currentPhotoPage--;
+            renderPhotoPage();
+            renderPhotoPagination();
+            scrollToPhotos();
+        }
+    });
+    paginationDiv.appendChild(prevBtn);
+    
+    // Page info
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'photo-page-info';
+    pageInfo.textContent = `Page ${currentPhotoPage} of ${totalPages}`;
+    paginationDiv.appendChild(pageInfo);
+    
+    // Next button
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'photo-page-btn';
+    nextBtn.innerHTML = 'Next →';
+    nextBtn.disabled = currentPhotoPage === totalPages;
+    nextBtn.addEventListener('click', () => {
+        if (currentPhotoPage < totalPages) {
+            currentPhotoPage++;
+            renderPhotoPage();
+            renderPhotoPagination();
+            scrollToPhotos();
+        }
+    });
+    paginationDiv.appendChild(nextBtn);
+    
+    photosSection.appendChild(paginationDiv);
+}
+
+function scrollToPhotos() {
+    const photosSection = document.querySelector('.event-photos-section');
+    if (photosSection) {
+        photosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function renderCalendarOptions(event) {
+    const calendarSection = document.getElementById('eventCalendarSection');
+    if (!calendarSection) return;
+    
+    const calendarIcons = calendarSection.querySelector('.calendar-icons');
+    if (!calendarIcons) return;
+
+    calendarIcons.innerHTML = `
+        <a href="#" data-event='${JSON.stringify(event).replace(/'/g, "&#39;")}' class="calendar-icon google-calendar" title="Add to Google Calendar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.89 4 3.01 4.9 3.01 6L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5zm7 6H7v-2h5v2zm4 0h-2v-2h2v2zm0 4h-2v-2h2v2zm-4 0H7v-2h5v2z" fill="#4285F4"/>
+                <path d="M12 14H7v-2h5v2z" fill="#EA4335"/>
+                <path d="M16 14h-2v-2h2v2z" fill="#FBBC04"/>
+                <path d="M16 18h-2v-2h2v2z" fill="#34A853"/>
+                <path d="M12 18H7v-2h5v2z" fill="#4285F4"/>
+            </svg>
+        </a>
+        <a href="#" data-event='${JSON.stringify(event).replace(/'/g, "&#39;")}' class="calendar-icon outlook-calendar" title="Add to Outlook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M24 12.5v7.1c0 .8-.7 1.4-1.5 1.4H13v-9h11v.5z" fill="#0078D4"/>
+                <path d="M13 3v9H2V4.5C2 3.7 2.7 3 3.5 3H13z" fill="#0078D4"/>
+                <path d="M13 12H2v7.5c0 .8.7 1.5 1.5 1.5H13v-9z" fill="#0364B8"/>
+                <path d="M24 4.5V12H13V3h9.5c.8 0 1.5.7 1.5 1.5z" fill="#28A8EA"/>
+                <path d="M9.5 7C7.6 7 6 8.6 6 10.5S7.6 14 9.5 14s3.5-1.6 3.5-3.5S11.4 7 9.5 7zm0 5.5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="white"/>
+            </svg>
+        </a>
+        <a href="#" data-event='${JSON.stringify(event).replace(/'/g, "&#39;")}' class="calendar-icon apple-calendar" title="Add to Apple Calendar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+            </svg>
+        </a>
+    `;
+
+    attachCalendarListeners();
 }
 
 function formatEventDate(dateString) {
@@ -162,7 +307,7 @@ function showEventError() {
     }
     
     if (eventDescription) {
-        eventDescription.innerHTML = 'Sorry, we could not load the event details. Please <a href="../events.html">return to the events page</a>.';
+        eventDescription.innerHTML = 'Sorry, we could not load the event details. Please <a href="../../events.html">return to the events page</a>.';
     }
     
     if (eventMeta) {

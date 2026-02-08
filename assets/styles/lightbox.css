@@ -152,6 +152,48 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* Photo Pagination */
+.photo-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.photo-page-btn {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.photo-page-btn:hover:not(:disabled),
+.photo-page-btn:focus:not(:disabled) {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.photo-page-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.photo-page-info {
+    font-size: 14px;
+    color: var(--text-dark);
+    font-weight: 600;
 }
 
 .photo-item {
@@ -175,6 +217,24 @@
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+/* Event Calendar Section - matches info-item styling */
+.event-detail-info-card .event-calendar-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: none;
+    margin-top: 0;
+}
+
+.event-detail-info-card .event-calendar-section h3 {
+    min-width: 120px;
+    color: var(--text-dark);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
 }
 
 /* Event Actions */
