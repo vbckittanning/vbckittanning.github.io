@@ -22,6 +22,68 @@ body {
     min-width: 320px;
 }
 
+/* Skip to main content link for keyboard navigation */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-color);
+    color: var(--text-light);
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 10000;
+    border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Enhanced focus indicators for keyboard navigation */
+*:focus {
+    outline: 3px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+a:focus,
+button:focus {
+    outline: 3px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+/* Ensure focus is visible on interactive elements */
+.logo-link:focus {
+    outline: 3px solid var(--text-light);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Visually hidden class for screen readers */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 .content {
     max-width: 1920px;
     margin: 0 auto;
@@ -105,6 +167,12 @@ body {
     z-index: 1001;
 }
 
+.hamburger:focus {
+    outline: 3px solid var(--text-light);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
 .hamburger span {
     width: 25px;
     height: 3px;
@@ -160,8 +228,14 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.nav-list a:hover {
+.nav-list a:hover,
+.nav-list a:focus {
     background-color: var(--secondary-color);
+}
+
+.nav-list a[aria-current="page"] {
+    background-color: var(--secondary-color);
+    font-weight: 700;
 }
 
 .hero {
@@ -309,7 +383,8 @@ body {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.event-button:hover {
+.event-button:hover,
+.event-button:focus {
     background-color: #a01729;
     transform: translateY(-2px);
 }
@@ -333,7 +408,8 @@ body {
     z-index: 10;
 }
 
-.carousel-control:hover {
+.carousel-control:hover,
+.carousel-control:focus {
     background-color: white;
     transform: translateY(-50%) scale(1.1);
 }
@@ -378,6 +454,11 @@ body {
 .indicator.active {
     background-color: var(--secondary-color);
     transform: scale(1.2);
+}
+
+.indicator:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
 }
 
 .content-section {
@@ -719,7 +800,8 @@ body {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.channel-button:hover {
+.channel-button:hover,
+.channel-button:focus {
     background-color: #a01729;
     transform: translateY(-2px);
 }
@@ -870,7 +952,8 @@ body {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.view-toggle-link:hover {
+.view-toggle-link:hover,
+.view-toggle-link:focus {
     background-color: var(--secondary-color);
     transform: translateY(-2px);
 }
@@ -1040,7 +1123,8 @@ body {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.event-register-btn:hover {
+.event-register-btn:hover,
+.event-register-btn:focus {
     background-color: #a01729;
     transform: translateY(-2px);
 }
@@ -1089,7 +1173,9 @@ body {
 }
 
 .pagination-btn:hover,
-.pagination-number:hover {
+.pagination-btn:focus,
+.pagination-number:hover,
+.pagination-number:focus {
     background-color: var(--primary-color);
     color: var(--text-light);
     text-decoration: none;

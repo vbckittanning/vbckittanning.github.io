@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 <body>
-    <header class="header">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="header" role="banner">
         <div class="container">
             <div class="nav-wrapper">
                 <a href="index.html" class="logo-link">
@@ -36,9 +37,9 @@
                     <span></span>
                 </button>
                 
-                <nav class="nav" id="nav">
+                <nav class="nav" id="nav" aria-label="Main navigation">
                     <ul class="nav-list">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="#" aria-current="page">Home</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="events.html">Events</a></li>
                         <li><a href="sermons.html">Sermons</a></li>
@@ -48,8 +49,8 @@
             </div>
         </div>
     </header>
-    <section class="content">
-        <section class="hero" id="home">
+    <main id="main-content" class="content" role="main">
+        <section class="hero" id="home" aria-label="Welcome banner">
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h2 class="hero-title">Welcome to Victory Baptist!</h2>
@@ -57,14 +58,14 @@
             </div>
         </section>
 
-        <section class="carousel-section">
+        <section class="carousel-section" aria-label="Featured events">
             <div class="container">
-                <div class="carousel">
+                <div class="carousel" role="region" aria-label="Events carousel" aria-live="polite">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="carousel-content">
-                                <div class="event-icon">
-                                    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div class="event-icon" aria-hidden="true">
+                                    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Clock icon">
                                         <circle cx="50" cy="50" r="45" fill="#c41e3a" opacity="0.2"/>
                                         <path d="M50 20 L50 50 L70 60" stroke="#c41e3a" stroke-width="4" stroke-linecap="round"/>
                                         <circle cx="50" cy="50" r="35" stroke="#c41e3a" stroke-width="3" fill="none"/>
@@ -79,8 +80,8 @@
 
                         <div class="carousel-item">
                             <div class="carousel-content">
-                                <div class="event-icon">
-                                    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div class="event-icon" aria-hidden="true">
+                                    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Checkmark icon">
                                         <circle cx="50" cy="50" r="45" fill="#c41e3a" opacity="0.2"/>
                                         <path d="M30 50 L45 65 L70 35" stroke="#c41e3a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
@@ -94,8 +95,8 @@
 
                         <div class="carousel-item">
                             <div class="carousel-content">
-                                <div class="event-icon">
-                                    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div class="event-icon" aria-hidden="true">
+                                    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Youth group icon">
                                         <circle cx="50" cy="50" r="45" fill="#c41e3a" opacity="0.2"/>
                                         <path d="M35 45 C35 35 45 30 50 30 C55 30 65 35 65 45 C65 55 50 65 50 70 M50 75 L50 78" stroke="#c41e3a" stroke-width="4" stroke-linecap="round"/>
                                     </svg>
@@ -108,18 +109,18 @@
                         </div>
                     </div>
 
-                    <button class="carousel-control prev" id="prevBtn" aria-label="Previous slide">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <button class="carousel-control prev" id="prevBtn" aria-label="Previous slide" aria-controls="carousel-inner">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="15 18 9 12 15 6"></polyline>
                         </svg>
                     </button>
-                    <button class="carousel-control next" id="nextBtn" aria-label="Next slide">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <button class="carousel-control next" id="nextBtn" aria-label="Next slide" aria-controls="carousel-inner">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </button>
 
-                    <div class="carousel-indicators">
+                    <div class="carousel-indicators" role="group" aria-label="Carousel navigation">
                         <button class="indicator active" data-slide="0" aria-label="Slide 1"></button>
                         <button class="indicator" data-slide="1" aria-label="Slide 2"></button>
                         <button class="indicator" data-slide="2" aria-label="Slide 3"></button>
@@ -128,7 +129,7 @@
             </div>
         </section>
 
-        <section class="content-section">
+        <section class="content-section" aria-label="Welcome message">
             <div class="container">
                 <div class="welcome-content">
                     <h2>Welcome to Our Church Family</h2>
@@ -136,9 +137,9 @@
                 </div>
             </div>
         </section>
-    </section>
+    </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-content">
                 <!-- Footer content loaded dynamically from data/site-info.json -->

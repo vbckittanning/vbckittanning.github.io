@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 <body>
-    <header class="header">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="header" role="banner">
         <div class="container">
             <div class="nav-wrapper">
                 <a href="index.html" class="logo-link">
@@ -36,11 +37,11 @@
                     <span></span>
                 </button>
                 
-                <nav class="nav" id="nav">
+                <nav class="nav" id="nav" aria-label="Main navigation">
                     <ul class="nav-list">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About</a></li>
-                        <li><a href="events.html">Events</a></li>
+                        <li><a href="events.html" aria-current="page">Events</a></li>
                         <li><a href="sermons.html">Sermons</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
@@ -49,8 +50,8 @@
         </div>
     </header>
 
-    <section class="content">
-        <div class="events-hero">
+    <main id="main-content" class="content" role="main">
+        <div class="events-hero" aria-label="Events page header">
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h2 class="hero-title">Upcoming Events</h2>
@@ -59,14 +60,14 @@
             </div>
         </div>
 
-        <section class="events-section">
+        <section class="events-section" aria-label="Upcoming events">
             <div class="container">
                 <div class="events-controls">
                     <div class="results-info" id="resultsInfo"></div>
                     <div class="view-toggle" id="viewToggle"></div>
                 </div>
 
-                <div class="events-grid" id="eventsGrid">
+                <div class="events-grid" id="eventsGrid" role="region" aria-live="polite" aria-label="Events list">
                     <div class="loading-container">
                         <div class="loading-spinner"></div>
                         <p>Loading events...</p>
@@ -76,9 +77,9 @@
                 <div id="pagination"></div>
             </div>
         </section>
-    </section>
+    </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-content">
                 <!-- Footer content loaded dynamically from data/site-info.json -->
