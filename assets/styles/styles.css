@@ -1172,22 +1172,6 @@ select:focus {
     transform: translateY(-2px);
 }
 
-/* Legacy class for backwards compatibility */
-.event-register-btn {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 25px;
-    background-color: var(--secondary-color);
-    color: var(--text-light);
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
 .event-register-btn:hover,
 .event-register-btn:focus {
     background-color: #a01729;
