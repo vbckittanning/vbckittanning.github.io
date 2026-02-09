@@ -223,10 +223,15 @@
 .event-detail-info-card .event-calendar-section {
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 12px 0;
     border-bottom: none;
     margin-top: 0;
+}
+
+.event-detail-info-card .event-calendar-section strong {
+    flex-shrink: 0;
+    width: 120px;
+    color: var(--text-dark);
 }
 
 /* Event Actions */

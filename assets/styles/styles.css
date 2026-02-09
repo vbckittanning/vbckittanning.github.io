@@ -1253,7 +1253,6 @@ select:focus {
 .event-calendar-section {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     gap: 12px;
     margin-top: 15px;
     padding-top: 12px;
