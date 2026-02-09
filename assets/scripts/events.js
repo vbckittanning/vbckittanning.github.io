@@ -108,34 +108,6 @@ async function loadPageEvents() {
 }
 
 
-// Date formatting now in libs.js
-
-// Get category badge class
-function getCategoryClass(category) {
-    const categoryMap = {
-        'service': 'category-service',
-        'study': 'category-study',
-        'fellowship': 'category-fellowship',
-        'outreach': 'category-outreach',
-        'youth': 'category-youth',
-        'special': 'category-special'
-    };
-    return categoryMap[category] || 'category-default';
-}
-
-// Get category display name
-function getCategoryName(category) {
-    const categoryNames = {
-        'service': 'Worship Service',
-        'study': 'Bible Study',
-        'fellowship': 'Fellowship',
-        'outreach': 'Outreach',
-        'youth': 'Youth Event',
-        'special': 'Special Event'
-    };
-    return categoryNames[category] || category;
-}
-
 /**
  * Create HTML for an event card
  * @param {Event} event - The event object to render

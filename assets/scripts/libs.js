@@ -166,6 +166,59 @@ function isDatePast(dateString) {
 }
 
 // ============================================================================
+// STRING UTILITIES
+// ============================================================================
+
+/**
+ * Format a date string for display
+ * @param {string} dateString - Date string in YYYY-MM-DD format
+ * @returns {string} Formatted date string
+ */
+function formatEventDate(dateString) {
+    const date = new Date(dateString + 'T00:00:00');
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+// ============================================================================
+// CATEGORY UTILITIES
+// ============================================================================
+
+/**
+ * Get category CSS class
+ * @param {string} category - Category name
+ * @returns {string} CSS class name
+ */
+function getCategoryClass(category) {
+    const categoryMap = {
+        'service': 'category-service',
+        'study': 'category-study',
+        'fellowship': 'category-fellowship',
+        'outreach': 'category-outreach',
+        'youth': 'category-youth',
+        'special': 'category-special'
+    };
+    return categoryMap[category] || 'category-service';
+}
+
+/**
+ * Get category display name
+ * @param {string} category - Category name
+ * @returns {string} Display name
+ */
+function getCategoryName(category) {
+    const categoryNames = {
+        'service': 'Worship Service',
+        'study': 'Bible Study',
+        'fellowship': 'Fellowship',
+        'outreach': 'Outreach',
+        'youth': 'Youth',
+        'special': 'Special Event'
+    };
+    return categoryNames[category] || 'Event';
+}
+
+// ============================================================================
 // ARRAY UTILITIES
 // ============================================================================
 

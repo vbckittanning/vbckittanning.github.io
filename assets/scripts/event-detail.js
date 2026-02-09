@@ -110,8 +110,8 @@ function populateEventDetails(event) {
     // Update event info card
     const eventInfo = document.getElementById('event-info');
     if (eventInfo) {
-        const categoryClass = `category-${event.category}`;
-        const categoryName = capitalizeFirstLetter(event.category);
+        const categoryClass = getCategoryClass(event.category);
+        const categoryName = getCategoryName(event.category);
         
         eventInfo.innerHTML = `
             <div class="info-item">
@@ -143,7 +143,7 @@ function populateEventDetails(event) {
 // Photo pagination state
 let allPhotos = [];
 let currentPhotoPage = 1;
-const photosPerPage = 6;
+const photosPerPage = 10;
 
 function loadEventPhotos(photos) {
     allPhotos = photos;
@@ -284,16 +284,6 @@ function renderCalendarOptions(event) {
     `;
 
     attachCalendarListeners();
-}
-
-function formatEventDate(dateString) {
-    const date = new Date(dateString + 'T00:00:00');
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-}
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function showEventError() {
