@@ -3,12 +3,15 @@
  */
 
 async function loadEventDetail() {
-        // Extract event ID from the filename
-    const pathname = window.location.pathname;
-    const filename = pathname.split('/').pop();
-    const eventId = filename.replace('.html', '');
+    // Read event ID from query string (?id=event-2026-01-22-game-night)
+    const eventId = getQueryParam('id');
 
-    const dataPath = '../data/events/';
+    if (!eventId) {
+        showEventError();
+        return;
+    }
+
+    const dataPath = 'data/events/';
 
     // Load event data from JSON file
     const response = await fetch(`${dataPath}${eventId}.json`);
@@ -84,6 +87,7 @@ function populateEventDetails(event) {
                 </svg>
                 ${formattedDate}
             </span>
+            ${event.time ? `
             <span class="event-detail-time">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -91,6 +95,7 @@ function populateEventDetails(event) {
                 </svg>
                 ${event.time}
             </span>
+            ` : ''}
             <span class="event-detail-location">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>

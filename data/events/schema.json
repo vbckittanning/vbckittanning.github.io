@@ -3,7 +3,7 @@
   "title": "Event",
   "description": "Schema for church event data",
   "type": "object",
-  "required": ["id", "title", "date", "time", "description"],
+  "required": ["id", "title", "date", "description"],
   "properties": {
     "id": {
       "type": "string",

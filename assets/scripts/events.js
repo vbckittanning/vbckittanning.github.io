@@ -3,7 +3,7 @@
  * @property {string} id - Unique event identifier
  * @property {string} title - Event title
  * @property {string} date - Event date in YYYY-MM-DD format
- * @property {string} time - Event time
+ * @property {string} [time] - Event time (optional; omit for all-day events)
  * @property {string} description - Event description
  * @property {string} [location] - Event location (optional)
  * @property {string} [category] - Event category (service, study, fellowship, outreach, youth, special)
@@ -15,7 +15,7 @@
 
 // Events Page Configuration
 const EVENTS_CONFIG = {
-    eventsPerPage: 10,
+    eventsPerPage: 5,
     dataPath: 'data/events/',
     manifestPath: 'data/events/manifest.json'
 };
@@ -117,11 +117,9 @@ function createEventCard(event) {
     const categoryClass = getCategoryClass(event.category);
     const categoryName = getCategoryName(event.category);
     
-    // Create event page link if eventPage is true
-    const eventPageUrl = event.eventPage ? `events/${event.id}.html` : null;
-    const titleHtml = eventPageUrl 
-        ? `<a href="${eventPageUrl}" class="event-title-link"><h3 class="event-title">${event.title}</h3></a>`
-        : `<h3 class="event-title">${event.title}</h3>`;
+    // Link all events to the generic event detail page
+    const eventPageUrl = `event-details.html?id=${encodeURIComponent(event.id)}`;
+    const titleHtml = `<a href="${eventPageUrl}" class="event-title-link"><h3 class="event-title">${event.title}</h3></a>`;
     
     return `
         <div class="event-card">
@@ -144,6 +142,7 @@ function createEventCard(event) {
                         </svg>
                         <span>${formatDate(event.date)}</span>
                     </div>
+                    ${event.time ? `
                     <div class="event-meta-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -151,6 +150,7 @@ function createEventCard(event) {
                         </svg>
                         <span>${event.time}</span>
                     </div>
+                    ` : ''}
                     ${event.location ? `
                     <div class="event-meta-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

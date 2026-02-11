@@ -5,12 +5,22 @@
 /**
  * Format date and time for calendar services
  * @param {string} date - Date in YYYY-MM-DD format
- * @param {string} time - Time string (e.g., "7:00 PM", "10:45 AM-12:00 PM")
- * @returns {Object} Object with start and end datetime strings in EST
+ * @param {string} [time] - Time string (e.g., "7:00 PM", "10:45 AM-12:00 PM"). Omit for all-day events.
+ * @returns {Object} Object with start and end datetime strings in EST, and allDay flag
  */
 function parseEventDateTime(date, time) {
     // Parse the date
     const [year, month, day] = date.split('-').map(Number);
+    const pad = (n) => String(n).padStart(2, '0');
+    const dateStr = `${year}-${pad(month)}-${pad(day)}`;
+
+    // If no time provided, return as all-day event
+    if (!time) {
+        const startDate = new Date(`${dateStr}T00:00:00`);
+        const endDate = new Date(`${dateStr}T00:00:00`);
+        endDate.setDate(endDate.getDate() + 1);
+        return { start: startDate, end: endDate, allDay: true };
+    }
     
     // Helper to parse a single time string
     const parseTime = (timeStr) => {
@@ -63,8 +73,6 @@ function parseEventDateTime(date, time) {
     
     // Create dates in EST timezone
     // Build ISO string for EST time and parse it
-    const pad = (n) => String(n).padStart(2, '0');
-    const dateStr = `${year}-${pad(month)}-${pad(day)}`;
     const startTimeStr = `${pad(startTime.hours)}:${pad(startTime.minutes)}:00`;
     const endTimeStr = `${pad(endTime.hours)}:${pad(endTime.minutes)}:00`;
     
@@ -72,7 +80,7 @@ function parseEventDateTime(date, time) {
     const startDate = new Date(`${dateStr}T${startTimeStr}`);
     const endDate = new Date(`${dateStr}T${endTimeStr}`);
     
-    return { start: startDate, end: endDate };
+    return { start: startDate, end: endDate, allDay: false };
 }
 
 /**
@@ -86,21 +94,36 @@ function formatICSDate(date) {
 }
 
 /**
+ * Format date for ICS all-day format (YYYYMMDD)
+ * @param {Date} date - JavaScript Date object
+ * @returns {string} Formatted date string (date only)
+ */
+function formatICSDateOnly(date) {
+    const pad = (n) => n.toString().padStart(2, '0');
+    return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}`;
+}
+
+/**
  * Generate Google Calendar URL
  * @param {Object} event - Event object with title, date, time, description, location
  * @returns {string} Google Calendar URL
  */
 function generateGoogleCalendarUrl(event) {
-    const { start, end } = parseEventDateTime(event.date, event.time);
+    const { start, end, allDay } = parseEventDateTime(event.date, event.time);
     
     const params = new URLSearchParams({
         action: 'TEMPLATE',
         text: event.title,
-        dates: `${formatICSDate(start)}/${formatICSDate(end)}`,
+        dates: allDay
+            ? `${formatICSDateOnly(start)}/${formatICSDateOnly(end)}`
+            : `${formatICSDate(start)}/${formatICSDate(end)}`,
         details: event.description || '',
-        location: event.location || '',
-        ctz: 'America/New_York'
+        location: event.location || ''
     });
+
+    if (!allDay) {
+        params.set('ctz', 'America/New_York');
+    }
     
     return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
@@ -111,7 +134,7 @@ function generateGoogleCalendarUrl(event) {
  * @returns {string} Outlook Calendar URL
  */
 function generateOutlookCalendarUrl(event) {
-    const { start, end } = parseEventDateTime(event.date, event.time);
+    const { start, end, allDay } = parseEventDateTime(event.date, event.time);
     
     const formatOutlookDate = (date) => {
         const year = date.getFullYear();
@@ -122,16 +145,23 @@ function generateOutlookCalendarUrl(event) {
         const seconds = String(date.getSeconds()).padStart(2, '0');
         return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     };
+
+    const formatOutlookDateOnly = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
     
     const params = new URLSearchParams({
         path: '/calendar/action/compose',
         rru: 'addevent',
         subject: event.title,
-        startdt: formatOutlookDate(start),
-        enddt: formatOutlookDate(end),
+        startdt: allDay ? formatOutlookDateOnly(start) : formatOutlookDate(start),
+        enddt: allDay ? formatOutlookDateOnly(end) : formatOutlookDate(end),
         body: event.description || '',
         location: event.location || '',
-        allday: 'false'
+        allday: allDay ? 'true' : 'false'
     });
     
     return `https://outlook.live.com/calendar/0/deeplink/compose?${params.toString()}`;
@@ -143,7 +173,7 @@ function generateOutlookCalendarUrl(event) {
  * @returns {string} ICS file content
  */
 function generateICSFile(event) {
-    const { start, end } = parseEventDateTime(event.date, event.time);
+    const { start, end, allDay } = parseEventDateTime(event.date, event.time);
     
     // Escape special characters in ICS format
     const escape = (str) => {
@@ -154,39 +184,69 @@ function generateICSFile(event) {
                   .replace(/\n/g, '\\n');
     };
 
-    return [
+    const lines = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
-        'PRODID:-//Victory Baptist Church//Events//EN',
-        'BEGIN:VTIMEZONE',
-        'TZID:America/New_York',
-        'BEGIN:DAYLIGHT',
-        'TZOFFSETFROM:-0500',
-        'TZOFFSETTO:-0400',
-        'TZNAME:EDT',
-        'DTSTART:19700308T020000',
-        'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU',
-        'END:DAYLIGHT',
-        'BEGIN:STANDARD',
-        'TZOFFSETFROM:-0400',
-        'TZOFFSETTO:-0500',
-        'TZNAME:EST',
-        'DTSTART:19701101T020000',
-        'RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU',
-        'END:STANDARD',
-        'END:VTIMEZONE',
+        'PRODID:-//Victory Baptist Church//Events//EN'
+    ];
+
+    // Only include timezone block for timed events
+    if (!allDay) {
+        lines.push(
+            'BEGIN:VTIMEZONE',
+            'TZID:America/New_York',
+            'BEGIN:DAYLIGHT',
+            'TZOFFSETFROM:-0500',
+            'TZOFFSETTO:-0400',
+            'TZNAME:EDT',
+            'DTSTART:19700308T020000',
+            'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU',
+            'END:DAYLIGHT',
+            'BEGIN:STANDARD',
+            'TZOFFSETFROM:-0400',
+            'TZOFFSETTO:-0500',
+            'TZNAME:EST',
+            'DTSTART:19701101T020000',
+            'RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU',
+            'END:STANDARD',
+            'END:VTIMEZONE'
+        );
+    }
+
+    lines.push(
         'BEGIN:VEVENT',
         `UID:${event.id || Date.now()}@victorybaptistchurch.com`,
-        `DTSTAMP:${formatICSDate(new Date())}`,
-        `DTSTART;TZID=America/New_York:${formatICSDate(start)}`,
-        `DTEND;TZID=America/New_York:${formatICSDate(end)}`,
+        `DTSTAMP:${formatICSDate(new Date())}`
+    );
+
+    if (allDay) {
+        lines.push(
+            `DTSTART;VALUE=DATE:${formatICSDateOnly(start)}`,
+            `DTEND;VALUE=DATE:${formatICSDateOnly(end)}`
+        );
+    } else {
+        lines.push(
+            `DTSTART;TZID=America/New_York:${formatICSDate(start)}`,
+            `DTEND;TZID=America/New_York:${formatICSDate(end)}`
+        );
+    }
+
+    lines.push(
         `SUMMARY:${escape(event.title)}`,
-        `DESCRIPTION:${escape(event.description || '')}`,
-        event.location ? `LOCATION:${escape(event.location)}` : '',
+        `DESCRIPTION:${escape(event.description || '')}`
+    );
+
+    if (event.location) {
+        lines.push(`LOCATION:${escape(event.location)}`);
+    }
+
+    lines.push(
         'STATUS:CONFIRMED',
         'END:VEVENT',
         'END:VCALENDAR'
-    ].filter(line => line).join('\r\n');
+    );
+
+    return lines.join('\r\n');
 }
 
 /**
