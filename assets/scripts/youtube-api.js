@@ -1,10 +1,15 @@
 // YouTube API Configuration
-// IMPORTANT: Replace 'YOUR_API_KEY_HERE' with your actual YouTube Data API v3 key
 const YOUTUBE_CONFIG = {
-    apiKey: 'YOUR_API_KEY_HERE',
-    channelId: 'UCvictorybaptistchurchkittan6993', // Extracted from your channel URL
+    apiKey: 'AIzaSyDoEtuH5xxVXX1Cm-Ie1eSxRebUMWJEPp4',
+    channelId: 'UCApnT3KVVVX_-Qpr3pjblKg', // Victory Baptist Church Kittanning
     maxResults: 10
 };
+
+// Log error and show user-facing message
+function showFetchError(detail) {
+    console.error('Error fetching YouTube videos:', detail);
+    showError('sermonsGrid', 'Unable to load videos. Please try again later.');
+}
 
 // Fetch videos from YouTube channel
 async function fetchYouTubeVideos() {
@@ -12,40 +17,41 @@ async function fetchYouTubeVideos() {
     
     if (apiKey === 'YOUR_API_KEY_HERE') {
         console.error('YouTube API key not configured. Please add your API key to youtube-api.js');
-        showError('YouTube API key not configured. Please see setup instructions.');
+        showError('sermonsGrid', 'YouTube API key not configured. Please see setup instructions.');
         return [];
     }
 
     try {
-        // First, get the uploads playlist ID
         const channelResponse = await fetch(
             `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${YOUTUBE_CONFIG.channelId}&key=${apiKey}`
         );
         
         if (!channelResponse.ok) {
-            throw new Error(`Channel API error: ${channelResponse.status}`);
+            showFetchError(`Channel API returned ${channelResponse.status}`);
+            return [];
         }
         
-        const channelData = await channelResponse.json();
+        const /** @type {{items: Array<{contentDetails: {relatedPlaylists: {uploads: string}}}>}} */ channelData = await channelResponse.json();
         
         if (!channelData.items || channelData.items.length === 0) {
-            throw new Error('Channel not found');
+            showFetchError('Channel not found');
+            return [];
         }
         
         const uploadsPlaylistId = channelData.items[0].contentDetails.relatedPlaylists.uploads;
         
-        // Fetch videos from the uploads playlist
         const videosResponse = await fetch(
             `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=${YOUTUBE_CONFIG.maxResults}&key=${apiKey}`
         );
         
         if (!videosResponse.ok) {
-            throw new Error(`Videos API error: ${videosResponse.status}`);
+            showFetchError(`Videos API returned ${videosResponse.status}`);
+            return [];
         }
         
         const videosData = await videosResponse.json();
         
-        return videosData.items.map(item => ({
+        return videosData.items.map(/** @param {{snippet: {resourceId: {videoId: string}, title: string, description: string, publishedAt: string, thumbnails: {medium: {url: string}}}}} item */ item => ({
             id: item.snippet.resourceId.videoId,
             title: item.snippet.title,
             description: item.snippet.description,
@@ -54,14 +60,13 @@ async function fetchYouTubeVideos() {
         }));
         
     } catch (error) {
-        console.error('Error fetching YouTube videos:', error);
-        showError('Unable to load videos. Please try again later.');
+        showFetchError(error);
         return [];
     }
 }
 
 // Format date for display
-function formatDate(dateString) {
+function formatSermonDate(dateString) {
     const date = new Date(dateString);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
@@ -88,7 +93,7 @@ function createSermonCard(video) {
             </div>
             <div class="sermon-info">
                 <h3>${video.title}</h3>
-                <p class="sermon-date">${formatDate(video.publishedAt)}</p>
+                <p class="sermon-date">${formatSermonDate(video.publishedAt)}</p>
                 <p class="sermon-description">${truncateDescription(video.description)}</p>
             </div>
         </div>
@@ -140,5 +145,6 @@ async function initializeSermonsPage() {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeSermonsPage);
 } else {
-    initializeSermonsPage();
+    initializeSermonsPage().then(() =>
+        console.log('Sermons page initialization complete'));
 }

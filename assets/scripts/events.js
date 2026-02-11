@@ -2,20 +2,20 @@
  * @typedef {Object} Event
  * @property {string} id - Unique event identifier
  * @property {string} title - Event title
- * @property {string} date - Event date in YYYY-MM-DD format
- * @property {string} time - Event time
+ * @property {string} date - Event start date in YYYY-MM-DD format
+ * @property {string} [endDate] - Event end date in YYYY-MM-DD format (optional, for multi-day events)
+ * @property {string} [time] - Event time (optional; omit for all-day events)
  * @property {string} description - Event description
  * @property {string} [location] - Event location (optional)
  * @property {string} [category] - Event category (service, study, fellowship, outreach, youth, special)
  * @property {string} [contactName] - Contact person name (optional)
  * @property {string} [contactEmail] - Contact email (optional)
  * @property {string} [contactPhone] - Contact phone (optional)
- * @property {boolean} [eventPage] - Whether this event has its own page (optional)
  */
 
 // Events Page Configuration
 const EVENTS_CONFIG = {
-    eventsPerPage: 10,
+    eventsPerPage: 5,
     dataPath: 'data/events/',
     manifestPath: 'data/events/manifest.json'
 };
@@ -117,11 +117,9 @@ function createEventCard(event) {
     const categoryClass = getCategoryClass(event.category);
     const categoryName = getCategoryName(event.category);
     
-    // Create event page link if eventPage is true
-    const eventPageUrl = event.eventPage ? `events/${event.id}.html` : null;
-    const titleHtml = eventPageUrl 
-        ? `<a href="${eventPageUrl}" class="event-title-link"><h3 class="event-title">${event.title}</h3></a>`
-        : `<h3 class="event-title">${event.title}</h3>`;
+    // Link all events to the generic event detail page
+    const eventPageUrl = `event-details.html?id=${encodeURIComponent(event.id)}`;
+    const titleHtml = `<a href="${eventPageUrl}" class="event-title-link"><h3 class="event-title">${event.title}</h3></a>`;
     
     return `
         <div class="event-card">
@@ -142,8 +140,9 @@ function createEventCard(event) {
                             <line x1="8" y1="2" x2="8" y2="6"></line>
                             <line x1="3" y1="10" x2="21" y2="10"></line>
                         </svg>
-                        <span>${formatDate(event.date)}</span>
+                        <span>${event.endDate ? formatDateRange(event.date, event.endDate) : formatDate(event.date)}</span>
                     </div>
+                    ${event.time ? `
                     <div class="event-meta-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -151,6 +150,7 @@ function createEventCard(event) {
                         </svg>
                         <span>${event.time}</span>
                     </div>
+                    ` : ''}
                     ${event.location ? `
                     <div class="event-meta-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -173,29 +173,7 @@ function createEventCard(event) {
                 <div class="event-calendar-section">
                     <span class="calendar-label">Add to Calendar:</span>
                     <div class="calendar-icons">
-                        <a href="#" data-event='${JSON.stringify(event).replace(/'/g, "&#39;")}' class="calendar-icon google-calendar" title="Add to Google Calendar">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.89 4 3.01 4.9 3.01 6L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5zm7 6H7v-2h5v2zm4 0h-2v-2h2v2zm0 4h-2v-2h2v2zm-4 0H7v-2h5v2z" fill="#4285F4"/>
-                                <path d="M12 14H7v-2h5v2z" fill="#EA4335"/>
-                                <path d="M16 14h-2v-2h2v2z" fill="#FBBC04"/>
-                                <path d="M16 18h-2v-2h2v2z" fill="#34A853"/>
-                                <path d="M12 18H7v-2h5v2z" fill="#4285F4"/>
-                            </svg>
-                        </a>
-                        <a href="#" data-event='${JSON.stringify(event).replace(/'/g, "&#39;")}' class="calendar-icon outlook-calendar" title="Add to Outlook">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M24 12.5v7.1c0 .8-.7 1.4-1.5 1.4H13v-9h11v.5z" fill="#0078D4"/>
-                                <path d="M13 3v9H2V4.5C2 3.7 2.7 3 3.5 3H13z" fill="#0078D4"/>
-                                <path d="M13 12H2v7.5c0 .8.7 1.5 1.5 1.5H13v-9z" fill="#0364B8"/>
-                                <path d="M24 4.5V12H13V3h9.5c.8 0 1.5.7 1.5 1.5z" fill="#28A8EA"/>
-                                <path d="M9.5 7C7.6 7 6 8.6 6 10.5S7.6 14 9.5 14s3.5-1.6 3.5-3.5S11.4 7 9.5 7zm0 5.5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="white"/>
-                            </svg>
-                        </a>
-                        <a href="#" data-event='${JSON.stringify(event).replace(/'/g, "&#39;")}' class="calendar-icon apple-calendar" title="Add to Apple Calendar">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                            </svg>
-                        </a>
+                        ${generateCalendarIconsHtml(event)}
                     </div>
                 </div>
             </div>
@@ -329,7 +307,7 @@ async function initializeEventsPage() {
     showLoading('eventsGrid', 'Loading events...');
     
     try {
-        // loadPageEvents only loads the 10 events for the current page
+        // loadPageEvents only loads the events for the current page
         currentPageEvents = await loadPageEvents();
         renderEvents();
     } catch (error) {
@@ -337,10 +315,6 @@ async function initializeEventsPage() {
         showError('eventsGrid', 'An unexpected error occurred while loading events.');
     }
 }
-
-// ============================================================================
-// CALENDAR UTILITIES
-// ============================================================================
 
 // Run when DOM is loaded
 if (document.readyState === 'loading') {

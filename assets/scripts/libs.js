@@ -170,14 +170,12 @@ function isDatePast(dateString) {
 // ============================================================================
 
 /**
- * Format a date string for display
+ * Format a date string for display (delegates to formatDate)
  * @param {string} dateString - Date string in YYYY-MM-DD format
  * @returns {string} Formatted date string
  */
 function formatEventDate(dateString) {
-    const date = new Date(dateString + 'T00:00:00');
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    return formatDate(dateString, { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 // ============================================================================
@@ -247,6 +245,37 @@ function formatDate(dateString, options = { weekday: 'long', year: 'numeric', mo
     // Create date at noon to avoid timezone issues
     const date = new Date(year, month - 1, day, 12, 0, 0);
     return date.toLocaleDateString('en-US', options);
+}
+
+/**
+ * Format a date range for display (e.g., "March 15 - 16, 2026" or "March 28 - April 2, 2026")
+ * @param {string} startDateString - Start date in YYYY-MM-DD format
+ * @param {string} [endDateString] - End date in YYYY-MM-DD format (optional)
+ * @returns {string} Formatted date range string
+ */
+function formatDateRange(startDateString, endDateString) {
+    if (!endDateString || startDateString === endDateString) {
+        return formatDate(startDateString);
+    }
+
+    const [sYear, sMonth, sDay] = startDateString.split('-').map(Number);
+    const [eYear, eMonth, eDay] = endDateString.split('-').map(Number);
+    const startDate = new Date(sYear, sMonth - 1, sDay, 12, 0, 0);
+    const endDate = new Date(eYear, eMonth - 1, eDay, 12, 0, 0);
+
+    const startMonth = startDate.toLocaleDateString('en-US', { month: 'long' });
+    const endMonth = endDate.toLocaleDateString('en-US', { month: 'long' });
+
+    if (sYear === eYear && sMonth === eMonth) {
+        // Same month: "March 15-16, 2026"
+        return `${startMonth} ${sDay}-${eDay}, ${sYear}`;
+    } else if (sYear === eYear) {
+        // Different months, same year: "March 28 - April 2, 2026"
+        return `${startMonth} ${sDay} - ${endMonth} ${eDay}, ${sYear}`;
+    } else {
+        // Different years: "December 30, 2025 - January 2, 2026"
+        return `${startMonth} ${sDay}, ${sYear} - ${endMonth} ${eDay}, ${eYear}`;
+    }
 }
 
 /**

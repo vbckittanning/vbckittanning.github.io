@@ -1,32 +1,7 @@
 {
   "events": [
-    "event-2025-12-10-christmas-outreach.json",
-    "event-2025-12-15-ladies-luncheon.json",
-    "event-2025-12-20-christmas-concert.json",
-    "event-2025-12-24-christmas-eve.json",
-    "event-2026-01-02-new-years-breakfast.json",
-    "event-2026-01-05-baptism-service.json",
-    "event-2026-01-07-vision-casting.json",
-    "event-2026-01-10-community-cleanup.json",
-    "event-2026-01-12-mens-prayer.json",
-    "event-2026-01-15-winter-retreat.json",
-    "event-2026-01-17-womens-study.json",
-    "event-2026-01-20-new-years-service.json",
-    "event-2026-01-22-game-night.json",
-    "event-2026-01-25-christmas-party.json",
-    "event-2026-01-28-past-event.json",
-    "event-2026-02-09-sunday-service.json",
-    "event-2026-02-12-bible-study.json",
-    "event-2026-02-14-youth-group.json",
-    "event-2026-02-16-morning-prayer.json",
-    "event-2026-02-18-mens-breakfast.json",
-    "event-2026-02-20-community-outreach.json",
-    "event-2026-02-22-womens-bible-study.json",
-    "event-2026-02-25-movie-night.json",
-    "event-2026-03-01-sunday-school.json",
-    "event-2026-03-08-prayer-walk.json",
-    "event-2026-03-15-easter-service.json",
-    "event-2026-03-20-spring-concert.json",
-    "event-2026-04-05-good-friday.json"
+    "event-2026-04-24-ladies-meeting.json",
+    "event-2026-03-15-family-friends-day.json",
+    "event-2026-03-07-work-day.json"
   ]
 }
