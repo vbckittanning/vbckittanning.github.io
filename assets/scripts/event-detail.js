@@ -75,7 +75,7 @@ function populateEventDetails(event) {
     // Update event meta (date, time, location)
     const eventMeta = document.getElementById('event-meta');
     if (eventMeta) {
-        const formattedDate = formatEventDate(event.date);
+        const formattedDate = event.endDate ? formatDateRange(event.date, event.endDate) : formatEventDate(event.date);
         
         eventMeta.innerHTML = `
             <span class="event-detail-date">

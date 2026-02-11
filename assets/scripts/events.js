@@ -2,7 +2,8 @@
  * @typedef {Object} Event
  * @property {string} id - Unique event identifier
  * @property {string} title - Event title
- * @property {string} date - Event date in YYYY-MM-DD format
+ * @property {string} date - Event start date in YYYY-MM-DD format
+ * @property {string} [endDate] - Event end date in YYYY-MM-DD format (optional, for multi-day events)
  * @property {string} [time] - Event time (optional; omit for all-day events)
  * @property {string} description - Event description
  * @property {string} [location] - Event location (optional)
@@ -140,7 +141,7 @@ function createEventCard(event) {
                             <line x1="8" y1="2" x2="8" y2="6"></line>
                             <line x1="3" y1="10" x2="21" y2="10"></line>
                         </svg>
-                        <span>${formatDate(event.date)}</span>
+                        <span>${event.endDate ? formatDateRange(event.date, event.endDate) : formatDate(event.date)}</span>
                     </div>
                     ${event.time ? `
                     <div class="event-meta-item">

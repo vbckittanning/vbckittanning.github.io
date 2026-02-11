@@ -4,22 +4,29 @@
 
 /**
  * Format date and time for calendar services
- * @param {string} date - Date in YYYY-MM-DD format
+ * @param {string} date - Start date in YYYY-MM-DD format
  * @param {string} [time] - Time string (e.g., "7:00 PM", "10:45 AM-12:00 PM"). Omit for all-day events.
+ * @param {string} [endDate] - End date in YYYY-MM-DD format (optional, for multi-day events)
  * @returns {Object} Object with start and end datetime strings in EST, and allDay flag
  */
-function parseEventDateTime(date, time) {
-    // Parse the date
+function parseEventDateTime(date, time, endDate) {
+    // Parse the start date
     const [year, month, day] = date.split('-').map(Number);
     const pad = (n) => String(n).padStart(2, '0');
     const dateStr = `${year}-${pad(month)}-${pad(day)}`;
 
+    // Determine the end date string (defaults to start date)
+    const endDateStr = endDate || date;
+    const [eYear, eMonth, eDay] = endDateStr.split('-').map(Number);
+    const endDateFormatted = `${eYear}-${pad(eMonth)}-${pad(eDay)}`;
+
     // If no time provided, return as all-day event
     if (!time) {
-        const startDate = new Date(`${dateStr}T00:00:00`);
-        const endDate = new Date(`${dateStr}T00:00:00`);
-        endDate.setDate(endDate.getDate() + 1);
-        return { start: startDate, end: endDate, allDay: true };
+        const startDateObj = new Date(`${dateStr}T00:00:00`);
+        // All-day end date is exclusive, so add 1 day past the end date
+        const endDateObj = new Date(`${endDateFormatted}T00:00:00`);
+        endDateObj.setDate(endDateObj.getDate() + 1);
+        return { start: startDateObj, end: endDateObj, allDay: true };
     }
     
     // Helper to parse a single time string
@@ -76,11 +83,11 @@ function parseEventDateTime(date, time) {
     const startTimeStr = `${pad(startTime.hours)}:${pad(startTime.minutes)}:00`;
     const endTimeStr = `${pad(endTime.hours)}:${pad(endTime.minutes)}:00`;
     
-    // Create date strings in EST format (no timezone conversion)
-    const startDate = new Date(`${dateStr}T${startTimeStr}`);
-    const endDate = new Date(`${dateStr}T${endTimeStr}`);
+    // Start time uses start date, end time uses end date (for multi-day timed events)
+    const startDateObj = new Date(`${dateStr}T${startTimeStr}`);
+    const endDateObj = new Date(`${endDateFormatted}T${endTimeStr}`);
     
-    return { start: startDate, end: endDate, allDay: false };
+    return { start: startDateObj, end: endDateObj, allDay: false };
 }
 
 /**
@@ -109,7 +116,7 @@ function formatICSDateOnly(date) {
  * @returns {string} Google Calendar URL
  */
 function generateGoogleCalendarUrl(event) {
-    const { start, end, allDay } = parseEventDateTime(event.date, event.time);
+    const { start, end, allDay } = parseEventDateTime(event.date, event.time, event.endDate);
     
     const params = new URLSearchParams({
         action: 'TEMPLATE',
@@ -134,7 +141,7 @@ function generateGoogleCalendarUrl(event) {
  * @returns {string} Outlook Calendar URL
  */
 function generateOutlookCalendarUrl(event) {
-    const { start, end, allDay } = parseEventDateTime(event.date, event.time);
+    const { start, end, allDay } = parseEventDateTime(event.date, event.time, event.endDate);
     
     const formatOutlookDate = (date) => {
         const year = date.getFullYear();
@@ -173,7 +180,7 @@ function generateOutlookCalendarUrl(event) {
  * @returns {string} ICS file content
  */
 function generateICSFile(event) {
-    const { start, end, allDay } = parseEventDateTime(event.date, event.time);
+    const { start, end, allDay } = parseEventDateTime(event.date, event.time, event.endDate);
     
     // Escape special characters in ICS format
     const escape = (str) => {

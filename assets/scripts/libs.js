@@ -250,6 +250,37 @@ function formatDate(dateString, options = { weekday: 'long', year: 'numeric', mo
 }
 
 /**
+ * Format a date range for display (e.g., "March 15 - 16, 2026" or "March 28 - April 2, 2026")
+ * @param {string} startDateString - Start date in YYYY-MM-DD format
+ * @param {string} [endDateString] - End date in YYYY-MM-DD format (optional)
+ * @returns {string} Formatted date range string
+ */
+function formatDateRange(startDateString, endDateString) {
+    if (!endDateString || startDateString === endDateString) {
+        return formatDate(startDateString);
+    }
+
+    const [sYear, sMonth, sDay] = startDateString.split('-').map(Number);
+    const [eYear, eMonth, eDay] = endDateString.split('-').map(Number);
+    const startDate = new Date(sYear, sMonth - 1, sDay, 12, 0, 0);
+    const endDate = new Date(eYear, eMonth - 1, eDay, 12, 0, 0);
+
+    const startMonth = startDate.toLocaleDateString('en-US', { month: 'long' });
+    const endMonth = endDate.toLocaleDateString('en-US', { month: 'long' });
+
+    if (sYear === eYear && sMonth === eMonth) {
+        // Same month: "March 15-16, 2026"
+        return `${startMonth} ${sDay}-${eDay}, ${sYear}`;
+    } else if (sYear === eYear) {
+        // Different months, same year: "March 28 - April 2, 2026"
+        return `${startMonth} ${sDay} - ${endMonth} ${eDay}, ${sYear}`;
+    } else {
+        // Different years: "December 30, 2025 - January 2, 2026"
+        return `${startMonth} ${sDay}, ${sYear} - ${endMonth} ${eDay}, ${eYear}`;
+    }
+}
+
+/**
  * Get month abbreviation from date string
  * @param {string} dateString - Date string in YYYY-MM-DD format
  * @returns {string} Three-letter month abbreviation
