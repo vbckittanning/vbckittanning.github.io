@@ -170,14 +170,12 @@ function isDatePast(dateString) {
 // ============================================================================
 
 /**
- * Format a date string for display
+ * Format a date string for display (delegates to formatDate)
  * @param {string} dateString - Date string in YYYY-MM-DD format
  * @returns {string} Formatted date string
  */
 function formatEventDate(dateString) {
-    const date = new Date(dateString + 'T00:00:00');
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    return formatDate(dateString, { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 // ============================================================================

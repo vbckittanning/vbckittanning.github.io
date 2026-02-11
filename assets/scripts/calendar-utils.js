@@ -2,6 +2,9 @@
 // CALENDAR UTILITIES - Shared library for adding events to calendars
 // ============================================================================
 
+/** Zero-pad a number to 2 digits */
+const pad = (n) => String(n).padStart(2, '0');
+
 /**
  * Format date and time for calendar services
  * @param {string} date - Start date in YYYY-MM-DD format
@@ -12,7 +15,6 @@
 function parseEventDateTime(date, time, endDate) {
     // Parse the start date
     const [year, month, day] = date.split('-').map(Number);
-    const pad = (n) => String(n).padStart(2, '0');
     const dateStr = `${year}-${pad(month)}-${pad(day)}`;
 
     // Determine the end date string (defaults to start date)
@@ -96,7 +98,6 @@ function parseEventDateTime(date, time, endDate) {
  * @returns {string} Formatted date string
  */
 function formatICSDate(date) {
-    const pad = (n) => n.toString().padStart(2, '0');
     return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
 }
 
@@ -106,7 +107,6 @@ function formatICSDate(date) {
  * @returns {string} Formatted date string (date only)
  */
 function formatICSDateOnly(date) {
-    const pad = (n) => n.toString().padStart(2, '0');
     return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}`;
 }
 
@@ -272,6 +272,40 @@ function downloadICSFile(event) {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+}
+
+/**
+ * Generate calendar icons HTML for an event
+ * @param {Object} event - Event object
+ * @returns {string} HTML string for Google, Outlook, and Apple calendar links
+ */
+function generateCalendarIconsHtml(event) {
+    const eventJson = JSON.stringify(event).replace(/'/g, "&#39;");
+    return `
+        <a href="#" data-event='${eventJson}' class="calendar-icon google-calendar" title="Add to Google Calendar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.89 4 3.01 4.9 3.01 6L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5zm7 6H7v-2h5v2zm4 0h-2v-2h2v2zm0 4h-2v-2h2v2zm-4 0H7v-2h5v2z" fill="#4285F4"/>
+                <path d="M12 14H7v-2h5v2z" fill="#EA4335"/>
+                <path d="M16 14h-2v-2h2v2z" fill="#FBBC04"/>
+                <path d="M16 18h-2v-2h2v2z" fill="#34A853"/>
+                <path d="M12 18H7v-2h5v2z" fill="#4285F4"/>
+            </svg>
+        </a>
+        <a href="#" data-event='${eventJson}' class="calendar-icon outlook-calendar" title="Add to Outlook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M24 12.5v7.1c0 .8-.7 1.4-1.5 1.4H13v-9h11v.5z" fill="#0078D4"/>
+                <path d="M13 3v9H2V4.5C2 3.7 2.7 3 3.5 3H13z" fill="#0078D4"/>
+                <path d="M13 12H2v7.5c0 .8.7 1.5 1.5 1.5H13v-9z" fill="#0364B8"/>
+                <path d="M24 4.5V12H13V3h9.5c.8 0 1.5.7 1.5 1.5z" fill="#28A8EA"/>
+                <path d="M9.5 7C7.6 7 6 8.6 6 10.5S7.6 14 9.5 14s3.5-1.6 3.5-3.5S11.4 7 9.5 7zm0 5.5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="white"/>
+            </svg>
+        </a>
+        <a href="#" data-event='${eventJson}' class="calendar-icon apple-calendar" title="Add to Apple Calendar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+            </svg>
+        </a>
+    `;
 }
 
 /**
