@@ -517,7 +517,7 @@ select:focus {
 
 .service-time {
     display: grid;
-    grid-template-columns: 75px 135px 1fr;
+    grid-template-columns: 75px 85px 1fr;
     gap: 12px;
     font-size: 14px;
     opacity: 0.9;
@@ -529,7 +529,7 @@ select:focus {
 }
 
 .service-time .time {
-    text-align: left;
+    text-align: right;
 }
 
 .service-time .description {

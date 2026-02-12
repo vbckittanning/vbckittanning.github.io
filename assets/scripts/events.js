@@ -11,6 +11,7 @@
  * @property {string} [contactName] - Contact person name (optional)
  * @property {string} [contactEmail] - Contact email (optional)
  * @property {string} [contactPhone] - Contact phone (optional)
+ * @property {Array<string>} [photos] - Event photos (optional)
  */
 
 // Events Page Configuration

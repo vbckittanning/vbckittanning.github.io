@@ -35,10 +35,6 @@
       "type": "string",
       "description": "Event location (optional, defaults to church address)"
     },
-    "image": {
-      "type": "string",
-      "description": "Path to event image (optional)"
-    },
     "category": {
       "type": "string",
       "enum": ["service", "study", "fellowship", "outreach", "youth", "special"],
@@ -56,6 +52,13 @@
     "contactPhone": {
       "type": "string",
       "description": "Contact phone (optional)"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Event photos (optional)"
     }
   }
 }
