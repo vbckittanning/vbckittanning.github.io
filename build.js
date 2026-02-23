@@ -15,18 +15,16 @@ const STYLES_DIR = path.join(ASSETS_DIR, 'styles');
 const BUNDLES = {
   js: [
     {
-      name: 'app',
+      name: 'base',
       files: [
         path.join(SCRIPTS_DIR, 'libs.js'),
         path.join(SCRIPTS_DIR, 'script.js'),
       ],
-      pages: ['index.html', 'about.html', 'contact.html'],
+      pages: ['index.html', 'about.html', 'contact.html', 'sermons.html', 'events.html', 'event-details.html'],
     },
     {
       name: 'sermons',
       files: [
-        path.join(SCRIPTS_DIR, 'libs.js'),
-        path.join(SCRIPTS_DIR, 'script.js'),
         path.join(SCRIPTS_DIR, 'youtube-api.js'),
       ],
       pages: ['sermons.html'],
@@ -34,8 +32,6 @@ const BUNDLES = {
     {
       name: 'events',
       files: [
-        path.join(SCRIPTS_DIR, 'libs.js'),
-        path.join(SCRIPTS_DIR, 'script.js'),
         path.join(SCRIPTS_DIR, 'calendar-utils.js'),
         path.join(SCRIPTS_DIR, 'events.js'),
       ],
@@ -44,8 +40,6 @@ const BUNDLES = {
     {
       name: 'event-detail',
       files: [
-        path.join(SCRIPTS_DIR, 'libs.js'),
-        path.join(SCRIPTS_DIR, 'script.js'),
         path.join(SCRIPTS_DIR, 'calendar-utils.js'),
         path.join(SCRIPTS_DIR, 'lightbox.js'),
         path.join(SCRIPTS_DIR, 'event-detail.js'),
@@ -171,17 +165,26 @@ function rewriteHTMLFiles(jsHashes, cssHashes) {
     const srcPath = path.join(__dirname, htmlFile);
     let html = fs.readFileSync(srcPath, 'utf-8');
 
-    // Find which JS bundle this page uses
-    const jsBundle = BUNDLES.js.find((b) => b.pages.includes(htmlFile));
+    // Find which JS bundles this page uses
+    const jsBundles = BUNDLES.js.filter((b) => b.pages.includes(htmlFile));
     const cssBundle = BUNDLES.css.find((b) => b.pages.includes(htmlFile));
 
-    // Replace all script tags from assets/scripts/ with single bundled script
-    if (jsBundle && jsHashes[jsBundle.name]) {
-      const scriptTag = `<script src="assets/scripts/${jsHashes[jsBundle.name].filename}"><\/script>`;
-      // Replace all consecutive script tags from assets/scripts/ with one
+    // Replace all script tags from assets/scripts/ with bundled scripts
+    if (jsBundles.length > 0) {
+      const scriptTags = jsBundles
+        .map((bundle) => {
+          if (jsHashes[bundle.name]) {
+            return `<script src="assets/scripts/${jsHashes[bundle.name].filename}"><\/script>`;
+          }
+          return '';
+        })
+        .filter(Boolean)
+        .join('\n    ');
+      
+      // Replace all consecutive script tags from assets/scripts/ with bundled scripts
       html = html.replace(
         /(<script\s+src="assets\/scripts\/[^"]*"[^>]*><\/script>\s*)+/g,
-        scriptTag
+        scriptTags
       );
     }
 
