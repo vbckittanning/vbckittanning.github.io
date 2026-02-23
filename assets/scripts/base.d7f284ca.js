@@ -8,7 +8,7 @@ var g=(t,e,n)=>new Promise((s,o)=>{var c=a=>{try{r(n.next(a))}catch(l){o(l)}},u=
                 <p class="error-message">${e}</p>
                 ${n?`<p class="error-help">${n}</p>`:""}
             </div>
-        `)}function renderFooter(t="data/site-info.json"){return g(this,null,function*(){try{const e=yield loadJsonFile(t);if(!e){console.error("Failed to load site info");return}const n=document.querySelector(".footer-content");if(!n){console.warn("Footer content container not found");return}let s="";e.serviceTimes&&e.serviceTimes.length>0&&(s=e.serviceTimes.map(c=>`
+        `)}function renderFooter(t="data/site-info.json"){return g(this,null,function*(){try{const e=yield loadJsonFile(t);if(!e){console.error("Failed to load site info");return}const n=document.querySelector(".footer-content");if(!n){console.warn("Footer content container not found!");return}let s="";e.serviceTimes&&e.serviceTimes.length>0&&(s=e.serviceTimes.map(c=>`
                 <div class="service-time">
                     <span class="day">${c.day}${c.day?":":""}</span>
                     <span class="time">${c.time}</span>
