@@ -1,0 +1,48 @@
+{
+  "church": {
+    "name": "Victory Baptist Church",
+    "shortName": "Victory Baptist Church Kittanning"
+  },
+  "address": {
+    "street": "295 Pleasant View Drive",
+    "city": "Kittanning",
+    "state": "PA",
+    "zip": "16201",
+    "fullAddress": "295 Pleasant View Drive, Kittanning, PA 16201",
+    "mapsUrl": "https://www.google.com/maps/dir//Victory+Baptist+Church,+295+Pleasant+View+Dr,+Kittanning,+PA+16201"
+  },
+  "contact": {
+    "email": "vbckittanning@gmail.com",
+    "phone": "(724) 548-1943",
+    "phoneRaw": "+17245481943"
+  },
+  "serviceTimes": [
+    {
+      "day": "Sunday",
+      "time": "9:45 AM",
+      "description": "Classes for all ages"
+    },
+    {
+      "day": "",
+      "time": "10:45 AM",
+      "description": "Worship Service"
+    },
+    {
+      "day": "",
+      "time": "6:00 PM",
+      "description": "Evening Service"
+    },
+    {
+      "day": "Wednesday",
+      "time": "7:00 PM",
+      "description": "Bible Study"
+    }
+  ],
+  "social": {
+    "youtube": "https://www.youtube.com/@victorybaptistchurchkittan6993"
+  },
+  "copyright": {
+    "year": 2026,
+    "text": "Victory Baptist Church Kittanning. All rights reserved."
+  }
+}
