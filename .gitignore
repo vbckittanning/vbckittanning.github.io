@@ -1,2 +1,7 @@
 # Jetbrains
 .idea
+
+# Build and dependencies
+node_modules/
+dist/
+package-lock.json
