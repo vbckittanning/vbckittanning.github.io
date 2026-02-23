@@ -393,7 +393,7 @@ async function renderFooter(siteInfoPath = 'data/site-info.json') {
         // Find footer content container
         const footerContent = document.querySelector('.footer-content');
         if (!footerContent) {
-            console.warn('Footer content container not found');
+            console.warn('Footer content container not found!');
             return;
         }
 
