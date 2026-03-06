@@ -160,9 +160,15 @@ function isDatePast(dateString) {
     
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const compareDate = new Date(dateString);
+    
+    // Parse date in local timezone to avoid UTC conversion issues
+    const [year, month, day] = dateString.split('-').map(Number);
+    const compareDate = new Date(year, month - 1, day);
     compareDate.setHours(0, 0, 0, 0);
-    return compareDate < today;
+    
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    return compareDate <= yesterday;
 }
 
 // ============================================================================
