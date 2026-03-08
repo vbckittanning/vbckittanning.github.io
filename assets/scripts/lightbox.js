@@ -4,7 +4,7 @@
  */
 
 class Lightbox {
-    constructor() {
+    constructor(allPhotosArray = null) {
         this.lightbox = document.getElementById('lightbox');
         this.lightboxImage = document.getElementById('lightbox-image');
         this.lightboxCaption = document.getElementById('lightbox-caption');
@@ -15,24 +15,40 @@ class Lightbox {
         
         this.photos = [];
         this.currentIndex = 0;
+        this.allPhotosArray = allPhotosArray;
         
         this.init();
     }
     
     init() {
+        // If allPhotosArray is provided, use it for navigation
+        if (this.allPhotosArray && this.allPhotosArray.length > 0) {
+            this.photos = this.allPhotosArray.map((photo, index) => ({
+                src: photo.src || photo,
+                alt: photo.alt || `Event photo ${index + 1}`
+            }));
+        }
+        
         // Get all photo items
         const photoItems = document.querySelectorAll('.photo-item');
         
-        photoItems.forEach((item, index) => {
+        photoItems.forEach((item) => {
             const img = item.querySelector('img');
             if (img) {
-                this.photos.push({
-                    src: img.src,
-                    alt: img.alt || `Photo ${index + 1}`
-                });
+                // If not using allPhotosArray, build photos array from DOM
+                if (!this.allPhotosArray) {
+                    this.photos.push({
+                        src: img.src,
+                        alt: img.alt || `Photo ${this.photos.length + 1}`
+                    });
+                }
+                
+                // Get the actual index from data attribute (for paginated views)
+                const dataIndex = item.getAttribute('data-index');
+                const clickIndex = dataIndex ? parseInt(dataIndex, 10) : this.photos.findIndex(p => p.src === img.src);
                 
                 // Add click event to open lightbox
-                item.addEventListener('click', () => this.open(index));
+                item.addEventListener('click', () => this.open(clickIndex));
                 
                 // Add keyboard support for photo items
                 item.setAttribute('tabindex', '0');
@@ -40,7 +56,7 @@ class Lightbox {
                 item.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        this.open(index);
+                        this.open(clickIndex);
                     }
                 });
             }

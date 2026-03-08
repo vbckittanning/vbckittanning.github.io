@@ -184,10 +184,10 @@ function renderPhotoPage() {
         photoGrid.appendChild(photoItem);
     });
     
-    // Initialize lightbox after photos are loaded
+    // Initialize lightbox with all photos, not just visible ones
     if (window.Lightbox) {
         setTimeout(() => {
-            window.lightboxInstance = new window.Lightbox();
+            window.lightboxInstance = new window.Lightbox(allPhotos);
         }, 100);
     }
 }

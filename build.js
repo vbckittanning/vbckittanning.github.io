@@ -208,18 +208,18 @@ function rewriteHTMLFiles(jsHashes, cssHashes) {
 function copyStaticAssets() {
   console.log('\n📸 Copying static assets...');
 
-  const imagesDir = path.join(__dirname, 'assets', 'images');
-  const distImagesDir = path.join(DIST_ASSETS_DIR, 'images');
-
-  fs.mkdirSync(distImagesDir, { recursive: true });
-
-  const images = fs.readdirSync(imagesDir);
-  images.forEach((img) => {
-    const src = path.join(imagesDir, img);
-    const dest = path.join(distImagesDir, img);
-    fs.copyFileSync(src, dest);
+  // Copy entire assets directory recursively
+  const assetsDir = path.join(__dirname, 'assets');
+  fs.cpSync(assetsDir, DIST_ASSETS_DIR, {
+    recursive: true,
+    force: true,
+    filter: (src) => {
+      // Exclude scripts and styles since they're bundled
+      const relativePath = path.relative(assetsDir, src);
+      return !relativePath.startsWith('scripts') && !relativePath.startsWith('styles');
+    }
   });
-  console.log(`  ✓ Copied ${images.length} images`);
+  console.log(`  ✓ Copied assets directory`);
 
   // Copy favicon
   const faviconSrc = path.join(__dirname, 'favicon.svg');
