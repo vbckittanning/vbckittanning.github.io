@@ -37,7 +37,7 @@
     },
     "category": {
       "type": "string",
-      "enum": ["service", "study", "fellowship", "outreach", "youth", "special"],
+      "enum": ["service", "study", "fellowship", "outreach", "youth", "special", "meeting"],
       "description": "Event category"
     },
     "contactName": {

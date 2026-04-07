@@ -1077,6 +1077,11 @@ select:focus {
     color: #f57f17;
 }
 
+.category-meeting {
+    background-color: #ffcbe0;
+    color: #af3e4d
+}
+
 .event-meta {
     display: flex;
     flex-direction: column;
