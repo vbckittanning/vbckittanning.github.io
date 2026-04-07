@@ -194,15 +194,7 @@ function formatEventDate(dateString) {
  * @returns {string} CSS class name
  */
 function getCategoryClass(category) {
-    const categoryMap = {
-        'service': 'category-service',
-        'study': 'category-study',
-        'fellowship': 'category-fellowship',
-        'outreach': 'category-outreach',
-        'youth': 'category-youth',
-        'special': 'category-special'
-    };
-    return categoryMap[category] || 'category-service';
+    return `category-${category}`;
 }
 
 /**
@@ -217,7 +209,8 @@ function getCategoryName(category) {
         'fellowship': 'Fellowship',
         'outreach': 'Outreach',
         'youth': 'Youth',
-        'special': 'Special Event'
+        'special': 'Special Event',
+        'meeting': 'Meeting'
     };
     return categoryNames[category] || 'Event';
 }
