@@ -1908,3 +1908,140 @@ select:focus {
         padding: 50px 40px;
     }
 }
+
+/* ============================================================================
+   LIVE BANNER STYLES
+   ============================================================================ */
+
+.live-banner {
+    background-color: #cc0000;
+    color: var(--text-light);
+    padding: 13px 0;
+    margin-top: 80px; /* Account for fixed header */
+    text-align: center;
+}
+
+/* When live banner is visible, remove top margin from the next hero section */
+.live-banner:not([hidden]) + .hero {
+    margin-top: 0;
+}
+
+.live-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 0 50px;
+    position: relative;
+}
+
+.live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: white;
+    animation: live-pulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes live-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.75); }
+}
+
+.live-banner-text {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.live-banner-link {
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 6px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.live-banner-link:hover,
+.live-banner-link:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    outline: none;
+}
+
+.live-banner-close {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px 8px;
+    opacity: 0.8;
+    line-height: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 4px;
+}
+
+.live-banner-close:hover,
+.live-banner-close:focus {
+    opacity: 1;
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+/* Respect reduced motion for live dot */
+@media (prefers-reduced-motion: reduce) {
+    .live-dot {
+        animation: none;
+    }
+}
+
+/* ============================================================================
+   LIVE BADGE ON SERMON CARDS
+   ============================================================================ */
+
+.sermon-card--live {
+    border: 2px solid #cc0000;
+}
+
+.sermon-live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #cc0000;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.sermon-live-badge .live-dot {
+    width: 7px;
+    height: 7px;
+}
