@@ -211,11 +211,8 @@
 
     <script src="assets/scripts/libs.js"></script>
     <script src="assets/scripts/script.js"></script>
+    <script src="assets/scripts/youtube-api.js"></script>
     <script>
-        const youtubeApiScript = document.createElement('script');
-        youtubeApiScript.src = 'assets/scripts/youtube-api.js';
-        youtubeApiScript.defer = true;
-        document.body.appendChild(youtubeApiScript);
         // Load footer content on page load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => renderFooter());
