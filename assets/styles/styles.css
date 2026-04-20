@@ -2014,6 +2014,24 @@ select:focus {
     outline-offset: 2px;
 }
 
+/* Mobile: single-line compact banner — hide descriptive text, no wrapping */
+@media (max-width: 767px) {
+    .live-banner {
+        padding: 9px 0;
+    }
+
+    .live-banner-content {
+        flex-wrap: nowrap;
+        gap: 10px;
+        padding: 0 40px 0 12px;
+        justify-content: flex-start;
+    }
+
+    .live-banner-text {
+        display: none;
+    }
+}
+
 /* Respect reduced motion for live dot */
 @media (prefers-reduced-motion: reduce) {
     .live-dot {
