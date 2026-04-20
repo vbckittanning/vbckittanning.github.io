@@ -1919,6 +1919,9 @@ select:focus {
     padding: 13px 0;
     margin-top: 80px; /* Account for fixed header */
     text-align: center;
+    position: sticky;
+    top: 80px; /* Stick directly under the fixed nav */
+    z-index: 999;
 }
 
 /* When live banner is visible, remove top margin from the next hero section */
