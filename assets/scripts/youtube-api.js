@@ -95,6 +95,13 @@ async function fetchYouTubeVideos() {
     }
 }
 
+// Escape HTML special characters to prevent XSS from API-provided strings
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+}
+
 // Format date for display
 function formatSermonDate(dateString) {
     const date = new Date(dateString);
@@ -110,6 +117,11 @@ function truncateDescription(description, maxLength = 150) {
 
 // Create HTML for a sermon card
 function createSermonCard(video, isLive = false) {
+    const safeId = escapeHtml(video.id);
+    const safeTitle = escapeHtml(video.title);
+    const safeDescription = escapeHtml(truncateDescription(video.description));
+    const safeDate = formatSermonDate(video.publishedAt);
+
     const liveBadgeHtml = isLive ? `
         <div class="sermon-live-badge" role="status">
             <span class="live-dot" aria-hidden="true"></span>
@@ -121,8 +133,8 @@ function createSermonCard(video, isLive = false) {
         <div class="sermon-card${isLive ? ' sermon-card--live' : ''}">
             <div class="video-wrapper">
                 <iframe 
-                    src="https://www.youtube.com/embed/${video.id}" 
-                    title="${video.title}${isLive ? ' (Live)' : ''}" 
+                    src="https://www.youtube.com/embed/${safeId}" 
+                    title="${safeTitle}${isLive ? ' (Live)' : ''}" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
                     loading="lazy">
@@ -130,9 +142,9 @@ function createSermonCard(video, isLive = false) {
             </div>
             <div class="sermon-info">
                 ${liveBadgeHtml}
-                <h3>${video.title}</h3>
-                <p class="sermon-date">${formatSermonDate(video.publishedAt)}</p>
-                <p class="sermon-description">${truncateDescription(video.description)}</p>
+                <h3>${safeTitle}</h3>
+                <p class="sermon-date">${safeDate}</p>
+                <p class="sermon-description">${safeDescription}</p>
             </div>
         </div>
     `;
