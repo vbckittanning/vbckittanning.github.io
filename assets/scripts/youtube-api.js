@@ -16,7 +16,7 @@ async function fetchLiveStream() {
 
     try {
         const response = await fetch(
-            `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${YOUTUBE_CONFIG.channelId}&eventType=live&type=video&key=${apiKey}`
+            `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${YOUTUBE_CONFIG.channelId}&eventType=live&type=video&maxResults=1&fields=items(id/videoId,snippet/title)&key=${apiKey}`
         );
 
         if (!response.ok) return null;
