@@ -13,7 +13,7 @@
     <link rel="canonical" href="https://vbckittanning.com/">
     <title>Victory Baptist Church Kittanning</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="assets/styles/styles.08eacb2f.css"></head>
+    <link rel="stylesheet" href="assets/styles/styles.dbd18f4b.css"></head>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0N8F6EEFY6"></script>
@@ -61,6 +61,26 @@
         </div>
     </header>
     <main id="main-content" class="content" role="main">
+        <div id="liveBanner" class="live-banner" hidden role="alert">
+            <div class="container">
+                <div class="live-banner-content">
+                    <span class="live-indicator" aria-hidden="true">
+                        <span class="live-dot"></span>
+                        LIVE
+                    </span>
+                    <span class="live-banner-text">We're streaming live right now!</span>
+                    <a id="liveBannerLink" href="#" class="live-banner-link" target="_blank" rel="noopener noreferrer">
+                        Watch Now
+                    </a>
+                    <button id="liveBannerClose" class="live-banner-close" aria-label="Dismiss live stream notification">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
         <section class="hero" id="home" aria-label="Welcome banner">
             <div class="hero-overlay"></div>
             <div class="hero-content">
@@ -188,7 +208,8 @@
         </div>
     </footer>
 
-    <script src="assets/scripts/base.5f076f65.js"></script><script>
+    <script src="assets/scripts/base.5f076f65.js"></script>
+    <script src="assets/scripts/streaming.5c8105fe.js"></script><script>
         // Load footer content on page load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => renderFooter());
