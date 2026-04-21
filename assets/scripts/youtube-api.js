@@ -5,6 +5,36 @@ const YOUTUBE_CONFIG = {
     maxResults: 10
 };
 
+// Fetch the current live stream for the channel, if any
+async function fetchLiveStream() {
+    const apiKey = YOUTUBE_CONFIG.apiKey;
+
+    if (apiKey === 'YOUR_API_KEY_HERE') {
+        console.warn('YouTube API key not configured. Live stream check skipped.');
+        return null;
+    }
+
+    try {
+        const response = await fetch(
+            `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${YOUTUBE_CONFIG.channelId}&eventType=live&type=video&maxResults=1&fields=items(id/videoId,snippet/title)&key=${apiKey}`
+        );
+
+        if (!response.ok) return null;
+
+        const data = await response.json();
+
+        if (!data.items || data.items.length === 0) return null;
+
+        return {
+            id: data.items[0].id.videoId,
+            title: data.items[0].snippet.title
+        };
+    } catch (error) {
+        console.error('Error checking for live stream:', error);
+        return null;
+    }
+}
+
 // Log error and show user-facing message
 function showFetchError(detail) {
     console.error('Error fetching YouTube videos:', detail);
@@ -65,6 +95,13 @@ async function fetchYouTubeVideos() {
     }
 }
 
+// Escape HTML special characters to prevent XSS from API-provided strings
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+}
+
 // Format date for display
 function formatSermonDate(dateString) {
     const date = new Date(dateString);
@@ -79,29 +116,42 @@ function truncateDescription(description, maxLength = 150) {
 }
 
 // Create HTML for a sermon card
-function createSermonCard(video) {
+function createSermonCard(video, isLive = false) {
+    const safeId = escapeHtml(video.id);
+    const safeTitle = escapeHtml(video.title);
+    const safeDescription = escapeHtml(truncateDescription(video.description));
+    const safeDate = formatSermonDate(video.publishedAt);
+
+    const liveBadgeHtml = isLive ? `
+        <div class="sermon-live-badge" role="status">
+            <span class="live-dot" aria-hidden="true"></span>
+            Live
+        </div>
+    ` : '';
+
     return `
-        <div class="sermon-card">
+        <div class="sermon-card${isLive ? ' sermon-card--live' : ''}">
             <div class="video-wrapper">
                 <iframe 
-                    src="https://www.youtube.com/embed/${video.id}" 
-                    title="${video.title}" 
+                    src="https://www.youtube.com/embed/${safeId}" 
+                    title="${safeTitle}${isLive ? ' (Live)' : ''}" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
                     loading="lazy">
                 </iframe>
             </div>
             <div class="sermon-info">
-                <h3>${video.title}</h3>
-                <p class="sermon-date">${formatSermonDate(video.publishedAt)}</p>
-                <p class="sermon-description">${truncateDescription(video.description)}</p>
+                ${liveBadgeHtml}
+                <h3>${safeTitle}</h3>
+                <p class="sermon-date">${safeDate}</p>
+                <p class="sermon-description">${safeDescription}</p>
             </div>
         </div>
     `;
 }
 
 // Render videos to the page
-function renderVideos(videos) {
+function renderVideos(videos, liveStream = null) {
     const grid = document.getElementById('sermonsGrid');
     
     if (!grid) {
@@ -118,8 +168,11 @@ function renderVideos(videos) {
         `;
         return;
     }
-    
-    grid.innerHTML = videos.map(video => createSermonCard(video)).join('');
+
+    const liveVideoId = liveStream ? liveStream.id : null;
+    grid.innerHTML = videos.map(video =>
+        createSermonCard(video, video.id === liveVideoId)
+    ).join('');
 }
 
 // Initialize the sermons page
@@ -133,18 +186,52 @@ async function initializeSermonsPage() {
     showLoading('sermonsGrid', 'Loading sermons...');
     
     try {
-        const videos = await fetchYouTubeVideos();
-        renderVideos(videos);
+        const [videos, liveStream] = await Promise.all([
+            fetchYouTubeVideos(),
+            fetchLiveStream()
+        ]);
+        renderVideos(videos, liveStream);
     } catch (error) {
         console.error('Failed to initialize sermons page:', error);
         showError('sermonsGrid', 'An unexpected error occurred while loading sermons.', 'Check the browser console for more details.');
     }
 }
 
+// Initialize the live banner on the home page
+async function initializeLiveBanner() {
+    const banner = document.getElementById('liveBanner');
+    if (!banner) return;
+
+    const closeBtn = document.getElementById('liveBannerClose');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            banner.hidden = true;
+        });
+    }
+
+    try {
+        const liveStream = await fetchLiveStream();
+
+        if (liveStream) {
+            const link = document.getElementById('liveBannerLink');
+            if (link) {
+                link.href = `https://www.youtube.com/watch?v=${liveStream.id}`;
+                link.setAttribute('aria-label', `Watch live stream: ${liveStream.title}`);
+            }
+            banner.hidden = false;
+        }
+    } catch (error) {
+        console.error('Error initializing live banner:', error);
+    }
+}
+
 // Run when DOM is loaded
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeSermonsPage);
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeSermonsPage();
+        initializeLiveBanner();
+    });
 } else {
-    initializeSermonsPage().then(() =>
-        console.log('Sermons page initialization complete'));
+    initializeSermonsPage();
+    initializeLiveBanner();
 }

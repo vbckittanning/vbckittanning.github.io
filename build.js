@@ -23,11 +23,11 @@ const BUNDLES = {
       pages: ['index.html', 'about.html', 'contact.html', 'sermons.html', 'events.html', 'event-details.html'],
     },
     {
-      name: 'sermons',
+      name: 'streaming',
       files: [
         path.join(SCRIPTS_DIR, 'youtube-api.js'),
       ],
-      pages: ['sermons.html'],
+      pages: ['index.html', 'sermons.html'],
     },
     {
       name: 'events',
