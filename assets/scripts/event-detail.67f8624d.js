@@ -42,6 +42,7 @@ var D=(t,e,n)=>new Promise((o,i)=>{var a=c=>{try{r(n.next(c))}catch(d){i(d)}},s=
                 ${t.time}
             </span>
             `:""}
+            ${t.location?`
             <span class="event-detail-location">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -49,7 +50,7 @@ var D=(t,e,n)=>new Promise((o,i)=>{var a=c=>{try{r(n.next(c))}catch(d){i(d)}},s=
                 </svg>
                 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t.location)}" target="_blank" rel="noopener noreferrer">${t.location}</a>
             </span>
-        `}const m=document.getElementById("event-description");m&&(m.textContent=t.description);const p=document.getElementById("event-info");if(p){const h=getCategoryClass(t.category),l=getCategoryName(t.category);p.innerHTML=`
+            `:""}`}const m=document.getElementById("event-description");m&&(m.textContent=t.description);const p=document.getElementById("event-info");if(p){const h=getCategoryClass(t.category),l=getCategoryName(t.category);p.innerHTML=`
             <div class="info-item">
                 <strong>Category:</strong>
                 <span class="event-category ${h}">${l}</span>
