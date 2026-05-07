@@ -97,6 +97,7 @@ function populateEventDetails(event) {
                 ${event.time}
             </span>
             ` : ''}
+            ${event.location ? `
             <span class="event-detail-location">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -104,7 +105,7 @@ function populateEventDetails(event) {
                 </svg>
                 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}" target="_blank" rel="noopener noreferrer">${event.location}</a>
             </span>
-        `;
+            ` : ''}`;
     }
     
     // Update description
