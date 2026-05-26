@@ -111,7 +111,7 @@ function populateEventDetails(event) {
     // Update description
     const eventDescription = document.getElementById('event-description');
     if (eventDescription) {
-        eventDescription.textContent = event.description;
+        eventDescription.innerHTML = event.description;
     }
     
     // Update event info card
