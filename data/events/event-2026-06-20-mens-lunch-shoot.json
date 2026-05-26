@@ -1,7 +1,11 @@
 {
   "id": "event-2026-06-20-mens-lunch-shoot",
-  "title": "Men's Lunch and Shotgun Shoot",
+  "title": "Lunch and Shotgun Shoot",
   "date": "2026-06-20",
-  "description": "Details coming soon!",
-  "category": "fellowship"
+  "time": "1:30PM",
+  "description": "Join us on Saturday for a time of food, fellowship and FUN! Everyone is invited to the Shotgun Shoot at the Pony Farm Trap and Gun Club in Kittanning, PA. We'll be having a potluck lunch, so please bring a dish to share. After lunch we'll enjoy some clay shooting. Clays are provided, but please bring your own shotgun and shells. Come out for good food, fellowship and a great time. Sign-up sheet in the back of the sanctuary.",
+  "location": "Pony Farm Trap and Gun Club 592 Pony Farm Road Kittanning, PA 16201",
+  "category": "fellowship",
+  "contactName": "Pastor Leo",
+  "contactPhone": "(724) 548-1943"
 }
