@@ -356,7 +356,7 @@ select:focus {
     margin-bottom: 25px;
 }
 
-.event-button {
+.button {
     display: inline-block;
     padding: 12px 30px;
     background-color: var(--secondary-color);
@@ -367,10 +367,14 @@ select:focus {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.event-button:hover,
-.event-button:focus {
+.button:hover,
+.button:focus {
     background-color: #a01729;
     transform: translateY(-2px);
+}
+
+.button--tithely {
+    margin: 20px 0;
 }
 
 .carousel-control {
@@ -2071,4 +2075,14 @@ select:focus {
 .sermon-live-badge .live-dot {
     width: 7px;
     height: 7px;
+}
+
+.give-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
 }
