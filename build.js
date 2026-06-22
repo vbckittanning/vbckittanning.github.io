@@ -20,7 +20,7 @@ const BUNDLES = {
         path.join(SCRIPTS_DIR, 'libs.js'),
         path.join(SCRIPTS_DIR, 'script.js'),
       ],
-      pages: ['index.html', 'about.html', 'contact.html', 'sermons.html', 'events.html', 'event-details.html'],
+      pages: ['index.html', 'about.html', 'contact.html', 'sermons.html', 'give.html', 'events.html', 'event-details.html'],
     },
     {
       name: 'streaming',
@@ -51,7 +51,7 @@ const BUNDLES = {
     {
       name: 'styles',
       files: [path.join(STYLES_DIR, 'styles.css')],
-      pages: ['index.html', 'about.html', 'contact.html', 'sermons.html', 'events.html'],
+      pages: ['index.html', 'about.html', 'contact.html', 'sermons.html', 'give.html', 'events.html'],
     },
     {
       name: 'event-details',
