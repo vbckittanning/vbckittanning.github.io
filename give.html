@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online Giving to Victory Baptist Church Kittanning.">
+    <meta name="copyright" content="Victory Baptist Church Kittanning">
+    <meta property="og:title" content="Give - Victory Baptist Church Kittanning">
+    <meta property="og:description" content="Online Giving to Victory Baptist Church Kittanning.">
+    <meta property="og:url" content="https://vbckittanning.com/give.html">
+    <meta property="og:site_name" content="Victory Baptist Church Kittanning">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://vbckittanning.com/give.html">
+    <title>Give - Victory Baptist Church Kittanning</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="assets/styles/styles.be4caa21.css"></head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0N8F6EEFY6"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0N8F6EEFY6');
+</script>
+
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header class="header" role="banner">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="index.html" class="logo-link">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <span>VBC</span>
+                    </div>
+                    <div class="logo-text">
+                        <h1>VICTORY BAPTIST</h1>
+                        <p>CHURCH</p>
+                    </div>
+                </div>
+            </a>
+
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav" id="nav" aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="sermons.html">Sermons</a></li>
+                    <li><a href="give.html" aria-current="page">Give</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<main id="main-content" class="content" role="main">
+    <div class="about-hero" aria-label="Give page header">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2 class="hero-title">Give</h2>
+            <div class="hero-divider"></div>
+            <p class="hero-subtitle">Support Victory Baptist Church</p>
+        </div>
+    </div>
+
+    <section class="about-section" aria-label="Online Giving">
+        <div class="container">
+            <div class="about-church">
+                <div id="thanks-message" class="hidden">
+                    <h2>Thank You!</h2>
+                    <p>
+                        We appreciate your support and partnership in the work of the Lord. Your tithes and offerings make a difference in the ministry of Victory Baptist Church.
+                    </p>
+                </div>
+                <div id="giving-controls">
+                    <h2>Online Giving</h2>
+                    <p>
+                        Thank you for supporting the ministry of Victory Baptist Church. Your faithful tithes and offerings enable us to preach the Gospel, support missions, minister to families, and serve our community for the glory of God.
+
+                        To give online, simply click the button below or scan the QR code. All donations are processed securely through Tithe.ly.<br/><br/>
+
+                        <span style="font-style: italic">"Upon the first day of the week let every one of you lay by him in store, as God hath prospered him..." — 1 Corinthians 16:2</span>
+                    </p>
+                    <section class="give-options">
+                        <img src="assets/images/tithely-qr.jpg"
+                             alt="Tithe.ly QR Code"
+                             title="Tithe.ly QR Code"
+                             aria-hidden="true"
+                             style="width: 150px;height: auto"/>
+
+                        <a class="button button--tithely"
+                           aria-label="Give via Tithe.ly"
+                           title="Give via Tithe.ly"
+                           href="https://give.tithe.ly/?formId=9975771b-8e72-4871-a08e-56c7f91c596d&context=modal">
+                            Give via Tithe.ly
+                        </a>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer" role="contentinfo">
+    <div class="container">
+        <div class="footer-content">
+            <!-- Footer content loaded dynamically from data/site-info.json -->
+        </div>
+        <div class="footer-bottom">
+            <p><!-- Copyright loaded dynamically --></p>
+        </div>
+    </div>
+</footer>
+
+<script src="assets/scripts/base.5f076f65.js"></script><script src="https://static.tithely.com/give/give.js" defer></script>
+<script>
+    // Load footer content on page load
+    renderFooter();
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const thanks = urlParams.get('thanks');
+    const controls = document.getElementById('giving-controls');
+    const thanksMessage = document.getElementById('thanks-message');
+
+    if(thanks) {
+        controls.classList.add('hidden');
+        thanksMessage.classList.remove('hidden');
+    }
+</script>
+</body>
+</html>
