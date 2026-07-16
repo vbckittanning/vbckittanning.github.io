@@ -1,9 +1,11 @@
 {
   "id": "event-2026-07-16-breakfast-club",
-  "title": "Breakfast at Pampeno's Restaurant Ford City",
+  "title": "Breakfast at Crystal's Restaurant Kittanning",
   "date": "2026-07-16",
   "time": "8:30 AM",
-  "description": "Join us for breakfast at Pampeno's Restaurant on <strong>Thursday</strong> morning! This is a great opportunity to fellowship and enjoy a meal together. All are welcome! Bring a friend!",
-  "location": "900 5th Ave, Ford City, PA 16226",
-  "category": "fellowship"
+  "description": "Join us for breakfast at Crystal's Restaurant on <strong>Thursday</strong> morning! This is a great opportunity to fellowship and enjoy a meal together. All are welcome! Bring a friend! Please RSVP so we can get a count of those attending.",
+  "location": "134 S Grant Ave, Kittanning, PA 16201",
+  "category": "fellowship",
+  "contactName": "Pastor Leo",
+  "contactPhone": "(724) 548-1943"
 }
