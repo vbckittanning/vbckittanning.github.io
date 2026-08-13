@@ -1,0 +1,13 @@
+{
+  "id": "event-2026-08-16-vacation-bible-school",
+  "title": "Vacation Bible School",
+  "date": "2026-08-16",
+  "endDate": "2026-08-19",
+  "time": "6:00 PM - 8:00 PM",
+  "description": "Join us for Vacation Bible School Camp in a Box each night from 6PM - 8PM!",
+  "location": "Victory Baptist Church - 295 Pleasant View Drive, Kittanning, PA 16201",
+  "category": "special",
+  "photos": [
+    "/assets/vbc-2026.jpg"
+  ]
+}
