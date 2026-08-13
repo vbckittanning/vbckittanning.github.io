@@ -7,6 +7,8 @@
   "description": "Join us for Vacation Bible School Camp in a Box each night from 6PM - 8PM!",
   "location": "Victory Baptist Church - 295 Pleasant View Drive, Kittanning, PA 16201",
   "category": "special",
+  "contactName": "Pastor Leo",
+  "contactPhone": "(724) 548-1943",  
   "photos": [
     "/assets/images/vbc-2026.jpg"
   ]
