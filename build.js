@@ -17,6 +17,7 @@ const BUNDLES = {
     {
       name: 'base',
       files: [
+        path.join(SCRIPTS_DIR, 'config.js'),
         path.join(SCRIPTS_DIR, 'libs.js'),
         path.join(SCRIPTS_DIR, 'script.js'),
       ],
@@ -34,6 +35,7 @@ const BUNDLES = {
       files: [
         path.join(SCRIPTS_DIR, 'calendar-utils.js'),
         path.join(SCRIPTS_DIR, 'events.js'),
+        path.join(SCRIPTS_DIR, 'calendar-api.js'),
       ],
       pages: ['events.html'],
     },

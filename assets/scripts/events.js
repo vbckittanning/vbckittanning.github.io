@@ -108,6 +108,62 @@ async function loadPageEvents() {
     return result.items;
 }
 
+async function loadEventsFromGoogle() {
+    const events = await fetchCurrentEvents();
+    const categories = Object.keys(categoryNames);
+
+    function getDateAndTime(dateObject) {
+        let tempDate = undefined;
+        let tempDateString = undefined;
+        let eventDateTime = undefined;
+
+        if ('dateTime' in dateObject) {
+            tempDate = new Date(dateObject.dateTime);
+            eventDateTime = formatDateTime(tempDate, dateObject.timeZone);
+        }
+        else {
+            tempDate = new Date(dateObject.date);
+            tempDateString = tempDate.toISOString().split('T')[0];
+        }
+
+        return {
+            "date": eventDateTime ? eventDateTime.date : tempDateString,
+            "time": eventDateTime ? eventDateTime.time : null,
+        }
+    }
+
+    return events.map((event) => {
+        const summarySplit = event.summary.split(':')?.map(e => e.trim());
+        // TODO verify valid event category from categories variable above
+        const eventCategory = (summarySplit[0] ?? 'unspecified').toLowerCase();
+        const eventTitle = summarySplit[1] ?? event.summary;
+        const startDateTime = getDateAndTime(event.start);
+        const endDateTime = getDateAndTime(event.end);
+        let timeString = null;
+
+        if(startDateTime.time && endDateTime.time) {
+            timeString = `${startDateTime.time} - ${endDateTime.time}`;
+        }
+        else {
+            if (startDateTime.time) {
+                timeString = startDateTime.time;
+            }
+        }
+
+        return {
+            id: event.id,
+            title: eventTitle,
+            description: event.description,
+            location: event.location,
+            category: eventCategory,
+            date: startDateTime.date,
+            ...(endDateTime.date !== startDateTime.date && { endDate: endDateTime.date }),
+            ...(timeString && { time: timeString }),
+            // TODO how to handle contact name, email, phone from google calendar entry :-/
+        }
+    })
+}
+
 
 /**
  * Create HTML for an event card
@@ -267,7 +323,7 @@ function renderEvents() {
         viewToggle.innerHTML = `<a href="${linkUrl}" class="view-toggle-link">${linkText}</a>`;
     }
     
-    if (totalFilteredFiles === 0) {
+    if (currentPageEvents.length === 0) {
         grid.innerHTML = `
             <div class="no-events-container">
                 <p>No ${showPastEvents ? 'past' : 'upcoming'} events at this time.</p>
@@ -309,7 +365,8 @@ async function initializeEventsPage() {
     
     try {
         // loadPageEvents only loads the events for the current page
-        currentPageEvents = await loadPageEvents();
+        //currentPageEvents = await loadPageEvents();
+        currentPageEvents = await loadEventsFromGoogle();
         renderEvents();
     } catch (error) {
         console.error('Failed to initialize events page:', error);

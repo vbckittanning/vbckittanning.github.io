@@ -3,6 +3,16 @@
  * Provides reusable functions for loading and managing JSON-based content
  */
 
+const categoryNames = {
+    'service': 'Worship Service',
+    'study': 'Bible Study',
+    'fellowship': 'Fellowship',
+    'outreach': 'Outreach',
+    'youth': 'Youth',
+    'special': 'Special Event',
+    'meeting': 'Meeting'
+};
+
 // ============================================================================
 // QUERY STRING UTILITIES
 // ============================================================================
@@ -203,15 +213,6 @@ function getCategoryClass(category) {
  * @returns {string} Display name
  */
 function getCategoryName(category) {
-    const categoryNames = {
-        'service': 'Worship Service',
-        'study': 'Bible Study',
-        'fellowship': 'Fellowship',
-        'outreach': 'Outreach',
-        'youth': 'Youth',
-        'special': 'Special Event',
-        'meeting': 'Meeting'
-    };
     return categoryNames[category] || 'Event';
 }
 
@@ -232,6 +233,34 @@ function calculateTotalPages(totalItems, itemsPerPage) {
 // ============================================================================
 // DATE FORMATTING UTILITIES
 // ============================================================================
+
+/**
+ * Return date time components in desired format with timezone applied
+ * @param dateObj
+ * @param timeZone
+ * @returns {{date: string, time: string}}
+ */
+function formatDateTime(dateObj, timeZone = 'America/New_York') {
+    // Uses 'en-CA' locale because it natively outputs the YYYY-MM-DD format
+    const dateParts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: timeZone,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).format(dateObj);
+
+    const timeParts = new Intl.DateTimeFormat('en-US', {
+        timeZone: timeZone,
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true // Change to false if you prefer 24-hour time (18:00:00)
+    }).format(dateObj);
+
+    return {
+        date: dateParts,
+        time: timeParts
+    };
+}
 
 /**
  * Format a date string for display

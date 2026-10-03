@@ -1,7 +1,7 @@
 // YouTube API Configuration
 const YOUTUBE_CONFIG = {
-    apiKey: 'AIzaSyDoEtuH5xxVXX1Cm-Ie1eSxRebUMWJEPp4',
-    channelId: 'UCApnT3KVVVX_-Qpr3pjblKg', // Victory Baptist Church Kittanning
+    apiKey: SITE_CONFIG.GCloudApiKey,
+    channelId: SITE_CONFIG.YoutubeChannelId, // Victory Baptist Church Kittanning
     maxResults: 10
 };
 
