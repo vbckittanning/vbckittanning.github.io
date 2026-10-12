@@ -134,11 +134,13 @@ async function loadEventsFromGoogle() {
 
     return events.map((event) => {
         const summarySplit = event.summary.split(':')?.map(e => e.trim());
-        // TODO verify valid event category from categories variable above
-        const eventCategory = (summarySplit[0] ?? 'unspecified').toLowerCase();
+        const parsedCategory = summarySplit[0].toLowerCase();
+        const eventCategory = Object.hasOwn(categoryNames, parsedCategory) ? parsedCategory : 'unspecified';
         const eventTitle = summarySplit[1] ?? event.summary;
         const startDateTime = getDateAndTime(event.start);
         const endDateTime = getDateAndTime(event.end);
+        const eventFrontMatter = parseFrontMatter(event.description);
+        const cleanDescription = event.description.replace(/^---[\s\S]*?---\r?\n?/, '');
         let timeString = null;
 
         if(startDateTime.time && endDateTime.time) {
@@ -153,13 +155,15 @@ async function loadEventsFromGoogle() {
         return {
             id: event.id,
             title: eventTitle,
-            description: event.description,
+            description: cleanDescription,
             location: event.location,
             category: eventCategory,
             date: startDateTime.date,
             ...(endDateTime.date !== startDateTime.date && { endDate: endDateTime.date }),
             ...(timeString && { time: timeString }),
-            // TODO how to handle contact name, email, phone from google calendar entry :-/
+            contactName: 'contact' in eventFrontMatter ? eventFrontMatter.contact : undefined,
+            contactEmail: 'email' in eventFrontMatter ? eventFrontMatter.email : undefined,
+            contactPhone: 'phone' in eventFrontMatter ? eventFrontMatter.phone : undefined,
         }
     })
 }

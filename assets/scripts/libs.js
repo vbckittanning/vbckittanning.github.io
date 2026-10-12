@@ -468,3 +468,33 @@ async function renderFooter(siteInfoPath = 'data/site-info.json') {
         console.error('Error rendering footer:', error);
     }
 }
+
+function parseFrontMatter(str) {
+  // Regex matches the block between the first two sets of triple dashes
+  const match = str.match(/^---[\r\n]+([\s\S]*?)[\r\n]+---/);
+  
+  if (!match) {
+    return {}; // Return empty object if no front matter found
+  }
+
+  const rawFrontMatter = match[1];
+  const content = match[2];
+
+  // Convert raw YAML string into a basic JS Object
+  const data = {};
+  rawFrontMatter.split('\n').forEach(line => {
+    const parts = line.split(':');
+    if (parts.length >= 2) {
+      const key = parts[0].trim().toLowerCase();
+      const value = parts.slice(1).join(':').trim();
+      
+      // Basic type evaluation
+      if (value === 'true') data[key] = true;
+      else if (value === 'false') data[key] = false;
+      else if (!isNaN(value) && value !== '') data[key] = Number(value);
+      else data[key] = value.replace(/^['"]|['"]\$/g, ''); // Clean quotes
+    }
+  });
+
+  return data;
+}
